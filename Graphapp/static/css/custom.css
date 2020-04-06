@@ -1,0 +1,5 @@
+/* styles go here */
+.form-control-label{
+    float:left;
+    line-height:40px;
+}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}中药方剂知识库{% endblock %}
+
+{% block content %}
+    <!-- Counts Section -->
+    <br>
+        <div class="container-fluid">
+            <!-- Page Header-->
+            <header>
+                <h1 class="h3 display">中药方剂知识库</h1>
+            </header>
+            <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url 'Search_recipe' %}" method="get">
+                            <div class="form-group row" style="margin-left: 250px;" >
+                                <label class="form-control-label" >方剂名称</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="search-recipe-text" value="{{ search_text }}" style="vertical-align: middle;">
+                                </div>
+                                <div class="col-sm-2 " style="text-align: right;">
+                                    <button class="btn btn-primary" type="submit">检索</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                        {% if recipe %}
+                            <h2 class="h5">{{ recipe.recipe_name}}</h2>
+                            <div>
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                                    <li role="presentation" ><a href="#home" aria-controls="home" aria-expanded="true" role="tab" data-toggle="tab" id="home-tab">详细信息</a></li>
+                                    <li role="presentation" ><a href="#profile" aria-controls="profile" role="tab" aria-expanded="false" data-toggle="tab" id="profile-tab">中药成分</a></li>
+                                    <li role="presentation" ><a href="#messages" aria-controls="messages" role="tab" aria-expanded="false" data-toggle="tab" id="messages-tab">相关文献</a></li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content" id="myTabContent">
+                                    <div role="tabpanel" aria-labelledby="home-tab" class="tab-pane fade in active" id="home">
+                                      <ul class="list-group">
+                                         <li class="list-group-item">【简介】{{recipe.fangyi }}</li>
+                                      </ul>
+                                      <ul class="list-group">
+                                         <li class="list-group-item">【用法】{{recipe.usage }}</li>
+                                      </ul>
+                                    </div>
+                                    <div role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade" id="profile">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="list-group" id="list-tab" role="tablist">
+                                                    {% if herbs %}
+                                                        {% for herb in herbs %}
+                                                        <a class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list" href="#list{{ herb.med_mat_no }}" role="tab" >{{ herb.med_mat_name }}</a>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <p>没有查找到对应成分</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="tab-content" id="nav-tabContent">
+                                                    {% if herbs %}
+                                                        {% for herb in herbs %}
+                                                        <div class="tab-pane fade show " id="list{{ herb.med_mat_no }}" role="tabpanel" >
+                                                        <br>
+                                                            <p style="font-size: 15px">【拉丁名】{{ herb.med_mat_Latin_name }} </p>
+                                                            <p style="font-size: 15px">【类别】{{ herb.category }}</p>
+                                                            <p><div style="color:black">【简介】{{ herb.med_intro }}</div></p>
+                                                        </div>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" aria-labelledby="messages-tab" class="tab-pane fade" id="messages">
+                                        <div class="list-group">
+                                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start ">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h5 class="mb-1">{{ recipe.provenance }}</h5>
+                                                </div>
+{#                                                <p class="mb-1"> 作者：宋飞,赵诚,曹永兵,曹烨民<br>#}
+{#                                                    来源：《上海中医药大学学报》  2019年 第02期</p>#}
+                                            </a>
+{#                                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">#}
+{#                                                <div class="d-flex w-100 justify-content-between">#}
+{#                                                    <h5 class="mb-1">List group item heading</h5>#}
+{#                                                </div>#}
+{#                                                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>#}
+{#                                            </a>#}
+                                        </div>
+                                        </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <h2 class="card-title">未找到相关结果</h2>
+                            <br>
+                            <p class="card-subtitle mb-2 text-muted">您可以:</p>
+                            <p class="card-text">1.检查检索词是否有误或者过于复杂</p>
+                            <p class="card-text">2.在其他栏目中搜索“{{ search_text }}”</p>
+                            <a href="{% url 'index' %}" class="card-link">返回</a>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

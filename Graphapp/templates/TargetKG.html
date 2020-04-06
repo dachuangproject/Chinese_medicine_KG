@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}方剂知识图谱{% endblock %}
+{% block content %}
+    <br>
+        <div class="container-fluid">
+            <!-- Page Header-->
+            <header>
+                <h1 class="h3 display">方剂知识图谱</h1>
+            </header>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group row" style="margin-left: 300px;" >
+                                <label class="form-control-label" >方剂名称</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" placeholder="示例：软坚清脉颗粒" style="vertical-align: middle;">
+                                </div>
+                                <div class="col-sm-2 " style="text-align: right;">
+                                    <button class="btn btn-primary" >检索</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body" >
+                            <div id="id1">
+                                <script type="text/javascript">
+                                    var h=600;
+                                    var w=650;
+
+                                    var colors=d3.scale.category20()
+
+
+                                    var dataset={
+                                        nodes:[{ name:"软坚清脉颗粒"},{ name:"海藻"},{ name:"牡蛎"},{ name:"蒲黄"},{ name:"垂盆草"},{ name:"豨莶草"},
+                                            { name:"降脂"},{ name:"软坚散结"},{ name:"止血化瘀"},{ name:"清热利湿"},{ name:"祛风湿"}],
+
+                                        edges:[{ source:0,target:1,weight:5},{ source:0,target:2,weight:5},{ source:0,target:3,weight:5},{ source:0,target:4,weight:5},{ source:0,target:5,weight:5},{ source:1,target:6,weight:5},{ source:2,target:7,weight:5},
+                                            { source:3,target:8,weight:5},{ source:4,target:9,weight:5},{source:5,target:10,weight:5}]
+                                    };
+
+                                    var force=d3.layout.force()
+                                        .nodes(dataset.nodes)
+                                        .links(dataset.edges)
+                                        .size([w,h])
+                                        .linkDistance(90)
+                                        .charge(-800)
+                                        .start();
+
+                                    var svg=d3.select("#id1")
+                                        .append("svg")
+                                        .attr("width",w)
+                                        .attr("height",h);
+
+
+                                    var edges=svg.selectAll("line")
+                                        .data(dataset.edges)
+                                        .enter()
+                                        .append("line")
+                                        .style("stroke",function(d){
+                                            return colors(d.weight*d.weight*d.weight);
+                                        })
+                                        .style("stroke-width",function(d,i){
+                                            return d.weight;
+                                        });
+
+                                    var nodes=svg.selectAll("circle")
+                                        .data(dataset.nodes)
+                                        .enter()
+                                        .append("circle")
+                                        .attr("r",function(d,i){
+                                            if(i==0)
+                                            {
+                                                r=30;
+                                            }
+                                            else
+                                            {
+                                                r=20;
+                                            }
+                                            return r;
+                                        })
+                                        .style("fill",function(d,i){
+                                            if(i==0)
+                                            {
+                                                c=12;
+                                            }
+                                            else
+                                            {
+                                                c=10;
+                                            }
+                                            return colors(c);
+                                        })
+                                        //单击节点显示详情
+                                        .on("dblclick",function(d,i){
+                                            if(i>0)
+                                                window.location=d.name+".html"
+                                        })
+                                        .call(force.drag);
+
+                                    var texts = svg.selectAll("text")
+
+                                        .data(dataset.nodes)
+
+                                        .enter()
+
+                                        .append("text")
+
+                                        .style("fill", "black")
+
+                                        .attr("dx", 20)
+
+                                        .attr("dy", 8)
+
+                                        .text(function(d){
+
+                                            return d.name;
+
+                                        });
+
+
+
+                                    force.on("tick",function(){
+
+                                        edges.attr("x1",function(d){
+                                            return  d.source.x;
+                                        })
+                                            .attr("y1",function(d){
+                                                return  d.source.y;
+                                            })
+                                            .attr("x2",function(d){
+                                                return  d.target.x;
+                                            })
+                                            .attr("y2",function(d){
+                                                return  d.target.y;
+                                            });
+
+
+                                        nodes.attr("cx",function(d){
+                                            return d.x;
+                                        })
+                                            .attr("cy",function(d){
+                                                return d.y;
+                                            });
+
+                                        texts.attr("x",function(d){
+                                            return d.x;
+                                        })
+                                            .attr("y",function(d){
+                                                return d.y;
+                                            });
+
+                                    })
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div  style="height:600px;">
+                                <h1>垂盆草</h1>
+                                <p style="font-size: 15px">【中文拼音名】Chuipencao</p>
+                                <p style="font-size: 15px">【拉丁名】Sedi Herba</p>
+                                <img src="img/cpc.jpg" width="200" height="150">
+                                <br>
+                                <p><div style="color:black">【简介】垂盆草属于凉性，所以能够清除体热利于湿气的排出，还能凉血止血。垂盆草可以降低血清转氨酶，可以减轻口苦、食欲不好、小便赤黄等湿热等症状。</p>
+                                   </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
+
+
