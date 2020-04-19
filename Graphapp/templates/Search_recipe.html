@@ -14,11 +14,11 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{% url 'Search_recipe' %}" method="get">
+                        <form action="{% url 'index' %}" method="get">
                             <div class="form-group row" style="margin-left: 250px;" >
                                 <label class="form-control-label" >方剂名称</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="search-recipe-text" value="{{ search_text }}" style="vertical-align: middle;">
+                                    <input type="text" class="form-control" name="search-recipe-text"  style="vertical-align: middle;">
                                 </div>
                                 <div class="col-sm-2 " style="text-align: right;">
                                     <button class="btn btn-primary" type="submit">检索</button>
@@ -33,7 +33,6 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                        {% if recipe %}
                             <h2 class="h5">{{ recipe.recipe_name}}</h2>
                             <div>
                                 <!-- Nav tabs -->
@@ -101,14 +100,6 @@
                                         </div>
                                 </div>
                             </div>
-                        {% else %}
-                            <h2 class="card-title">未找到相关结果</h2>
-                            <br>
-                            <p class="card-subtitle mb-2 text-muted">您可以:</p>
-                            <p class="card-text">1.检查检索词是否有误或者过于复杂</p>
-                            <p class="card-text">2.在其他栏目中搜索“{{ search_text }}”</p>
-                            <a href="{% url 'index' %}" class="card-link">返回</a>
-                        {% endif %}
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}首页{% endblock %}
+
+{% block content %}
+<br>
+        <div class="container-fluid">
+            <!-- Page Header-->
+            <header>
+                <h1 class="h3 display">方剂知识图谱</h1>
+            </header>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                        <form action="{% url 'Recipeindex' %}" method="get">
+                            <div class="form-group row" style="margin-left: 250px;" >
+                                <label class="form-control-label">方剂名称</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="search-recipeKG-text" placeholder="示例：软坚清脉方" style="vertical-align: middle;">
+                                </div>
+                                <div class="col-sm-2 " style="text-align: right;">
+                                    <button class="btn btn-primary" >检索</button>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% if search_text %}
+        <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            {% if recipes %}
+                            <h2 class="h5">搜索结果</h2>
+                            {% for recipe in recipes %}
+                                <div class="list-group">
+                                  <a href="{% url 'RecipeKG' recipe.recipe_name %} " class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                      <h5 class="mb-1" >{{ recipe.recipe_name }}</h5>
+                                    </div>
+                                  </a>
+                                </div>
+                            {% endfor %}
+                            {% else %}
+                                <h2 class="card-title">未找到相关结果</h2>
+                                <br>
+                                <p class="card-subtitle mb-2 text-muted">您可以:</p>
+                                <p class="card-text">1.检查检索词是否有误或者过于复杂</p>
+                                <p class="card-text">2.在其他栏目中搜索“{{ search_text }}”</p>
+                                <a href="{% url 'Recipeindex' %}" class="card-link">返回</a>
+                             {% endif %}
+                        </div>
+                    </div>
+                </div>
+        </div>
+{% endif %}
+{% endblock %}

@@ -101,8 +101,8 @@ class Recipe(models.Model):
         managed = True
         db_table = 'recipe'
 
-    def __str__(self):
-        return self.recipe_name
+    # def __str__(self):
+    #     return self.recipe_name
 
 
 class Symptom(models.Model):
