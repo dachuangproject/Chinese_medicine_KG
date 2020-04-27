@@ -51,8 +51,14 @@
             <li><a href="{% url 'herbindex' %}"> <i class="icon-flask"></i>药材知识库                           </a></li>
             <li><a href="{% url 'Comindex' %}"> <i class="icon-grid"></i>组分知识库                           </a></li>
             <li><a href="{% url 'Geneindex' %}"> <i class="icon-flask"></i>基因知识库                           </a></li>
-            <li><a href="{% url 'Recipeindex' %}"> <i class="icon-website"></i>方剂知识图谱                               </a></li>
-{#            <li><a href="{% url 'Targetindex' %}"> <i class="icon-flask"></i>靶标知识图谱                           </a></li>#}
+            <li><a href="#Dropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-website"></i>方剂知识图谱 </a>
+              <ul id="Dropdown" class="collapse list-unstyled ">
+                <li><a href="{% url 'Recipehcindex' %}">方剂-药材-组分图谱</a></li>
+                <li><a href="{% url 'Recipehmiindex' %}">方剂-药材-靶标-疾病图谱</a></li>
+              </ul>
+            </li>
+            <li><a href="{% url 'Analysisindex' %}"> <i class="icon-flask"></i>查询分析                         </a></li>
+            <li><a href="{% url 'ADRindex' %}"> <i class="icon-flask"></i>不良反应                         </a></li>
           </ul>
         </div>
       </div>

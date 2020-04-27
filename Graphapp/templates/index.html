@@ -14,8 +14,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <form action="{% url 'index' %}" method="get">
-                                    <div class="form-group row" style="margin-left: 250px;" >
-                                        <label class="form-control-label" >方剂名称</label>
+                                    <div class="form-group row" style="margin-left: 250px;">
+                                        <label class="form-control-label" style=" margin-bottom: 0;padding-top: 0.5rem;">方剂名称</label>
                                         <div class="col-sm-4">
                                             <input type="text" class="form-control" name="search-recipe-text" value="{{ search_text }}" placeholder="示例：四妙勇安汤" style="vertical-align: middle;">
                                         </div>
@@ -28,15 +28,14 @@
                         </div>
                     </div>
                 </div>
-            </div>
-{% if search_text %}
+{% if search_text  %}
         <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            {% if recipes %}
+                            {% if recipe_list %}
                             <h2 class="h5">搜索结果</h2>
-                            {% for recipe in recipes %}
+                            {% for recipe in recipe_list %}
                                 <div class="list-group">
                                   <a href="{% url 'Search_recipe' recipe.recipe_name %} " class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
@@ -45,6 +44,72 @@
                                   </a>
                                 </div>
                                 {% endfor %}
+{#                                {% if data %}#}
+{#                                    <ul id="pages" class="pagination pagination-sm pagination-xs">#}
+{#                                        {% if data.first %}#}
+{#                                            <li><a href="?page=1">1</a></li>#}
+{#                                        {% endif %}#}
+{#                                        {% if data.left %}#}
+{#                                            {% if data.left_has_more %}#}
+{#                                                <li><span>...</span></li>#}
+{#                                            {% endif %}#}
+{#                                            {% for i in data.left %}#}
+{#                                                <li><a href="?page={{i}}">{{i}}</a></li>#}
+{#                                            {% endfor %}#}
+{#                                        {% endif %}#}
+{#                                        <li class="active"><a href="?page={{data.page}}">{{data.page}}</a></li>#}
+{#                                        {% if data.right %}#}
+{#                                            {% for i in data.right %}#}
+{#                                                <li><a href="?page={{i}}">{{i}}</a></li>#}
+{#                                            {% endfor %}#}
+{#                                            {% if data.right_has_more %}#}
+{#                                                <li><span>...</span></li>#}
+{#                                            {% endif %}#}
+{#                                        {% endif %}#}
+{#                                        {% if data.last %}#}
+{#                                            <li><a href="?page={{data.total_pages}}">{{data.total_pages}}</a></li>#}
+{#                                        {% endif %}#}
+{#                                    </ul>#}
+{#                                {% endif %}#}
+                                <br>
+                                <div class="pagination row">
+                                    <div class="m-auto">
+                                        <span class="step-links">
+                                            <!-- 如果不是第一页，则显示上翻按钮 -->
+                                            {% if recipe_list.has_previous %}
+                                                <a href="?search-recipe-text={{ search_text }}&page=1" class="btn btn-success">
+                                                    &laquo; 1
+                                                </a>
+                                                <span>...</span>
+                                                <a href="?search-recipe-text={{ search_text }}&page={{ recipe_list.previous_page_number }}"
+                                                   class="btn btn-secondary"
+                                                >
+                                                    {{ recipe_list.previous_page_number }}
+                                                </a>
+                                            {% endif %}
+
+                                            <!-- 当前页面 -->
+                                            <span class="current btn btn-success btn-lg">
+                                                {{ recipe_list.number }}
+                                            </span>
+
+                                            <!-- 如果不是最末页，则显示下翻按钮 -->
+                                            {% if recipe_list.has_next %}
+                                                <a href="?search-recipe-text={{ search_text }}&page={{ recipe_list.next_page_number }}"
+                                                   class="btn btn-secondary"
+                                                >
+                                                    {{ recipe_list.next_page_number }}
+                                                </a>
+                                                <span>...</span>
+                                                <a href="?search-recipe-text={{ search_text }}&page={{ recipe_list.paginator.num_pages }}"
+                                                   class="btn btn-success"
+                                                >
+                                                    {{ recipe_list.paginator.num_pages }} &raquo;
+                                                </a>
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </div>
                             {% else %}
                                 <h2 class="card-title">未找到相关结果</h2>
                                 <br>
@@ -57,6 +122,8 @@
                     </div>
                 </div>
         </div>
+
 {% endif %}
+    </div>
 {% endblock %}
 

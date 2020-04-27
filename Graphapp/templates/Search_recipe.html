@@ -43,12 +43,32 @@
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content" id="myTabContent">
-                                    <div role="tabpanel" aria-labelledby="home-tab" class="tab-pane fade in active" id="home">
-                                      <ul class="list-group">
-                                         <li class="list-group-item">【简介】{{recipe.fangyi }}</li>
+                                    <div role="tabpanel" aria-labelledby="home-tab" class="tab-pane active" id="home">
+                                        <ul class="list-group">
+                                         <li class="list-group-item">【分类】{{recipe.classify }}</li>
+                                      </ul>
+                                        <ul class="list-group">
+                                         <li class="list-group-item">【方义】{{recipe.fangyi }}</li>
+                                      </ul>
+                                        <ul class="list-group">
+                                         <li class="list-group-item">【功用】{{recipe.recfunction }}</li>
                                       </ul>
                                       <ul class="list-group">
                                          <li class="list-group-item">【用法】{{recipe.usage }}</li>
+                                      </ul>
+                                        <ul class="list-group">
+                                         <li class="list-group-item">【加减化裁】{{recipe.plusedreduced }}</li>
+                                      </ul>
+                                        <ul class="list-group">
+                                         <li class="list-group-item">【使用注意】{{recipe.cautioninuse }}</li>
+                                      </ul>
+                                        </ul>
+                                        <ul class="list-group">
+                                         <li class="list-group-item">【配伍特点】{{recipe.compatibilitycha }}</li>
+                                      </ul>
+                                      </ul>
+                                        <ul class="list-group">
+                                         <li class="list-group-item">【歌诀】{{recipe.for_in_verse }}</li>
                                       </ul>
                                     </div>
                                     <div role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade" id="profile">
@@ -70,9 +90,14 @@
                                                         {% for herb in herbs %}
                                                         <div class="tab-pane fade show " id="list{{ herb.med_mat_no }}" role="tabpanel" >
                                                         <br>
-                                                            <p style="font-size: 15px">【拉丁名】{{ herb.med_mat_Latin_name }} </p>
-                                                            <p style="font-size: 15px">【类别】{{ herb.category }}</p>
+                                                            <p style="font-size: 15px">【拼音】{{ herb.pinyin }} </p>
+                                                            <p style="font-size: 15px">【拉丁名】{{ herb.latin }} </p>
+                                                            <p style="font-size: 15px">【别名】{{ herb.alias }} </p>
                                                             <p><div style="color:black">【简介】{{ herb.med_intro }}</div></p>
+                                                            <p><div style="color:black">【功能】{{ herb.function }}</div></p>
+                                                            <p><div style="color:black">【用法用量】{{ herb.usdosage }}</div></p>
+                                                            <p><div style="color:black">【毒性】{{ herb.toxicity }}</div></p>
+                                                            <p><div style="color:black">【不良反应】{{ herb.adverserea }}</div></p>
                                                         </div>
                                                         {% endfor %}
                                                     {% else %}
@@ -86,6 +111,9 @@
                                             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start ">
                                                 <div class="d-flex w-100 justify-content-between">
                                                     <h5 class="mb-1">{{ recipe.provenance }}</h5>
+                                                </div>
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h5 class="mb-1">{{ recipe.imliter }}</h5>
                                                 </div>
 {#                                                <p class="mb-1"> 作者：宋飞,赵诚,曹永兵,曹烨民<br>#}
 {#                                                    来源：《上海中医药大学学报》  2019年 第02期</p>#}

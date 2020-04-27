@@ -1328,11 +1328,11 @@ select.form-control option {
 }
 
 .form-group {
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
 
 .form-group div[class*='col-'] {
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
 
 .input-group-text {

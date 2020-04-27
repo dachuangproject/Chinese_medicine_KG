@@ -37,16 +37,146 @@
                             <table class="table table-hover">
                               <tbody>
                                 <tr>
-                                  <th scope="row">【汉语拼音】</th>
-                                  <td>Mark</td>
+                                  <th width="30%" scope="row">【汉语拼音】</th>
+                                  <td>{{ herb.pinyin }}</td>
                                 </tr>
                                 <tr>
                                   <th scope="row">【别名】</th>
-                                  <td>Jacob</td>
+                                  <td>{{ herb.alias }}</td>
                                 </tr>
                                 <tr>
-                                  <th scope="row">【植物种属】</th>
-                                  <td>@twitter</td>
+                                  <th scope="row">【简介】</th>
+                                  <td>{{ herb.med_intro }}</td>
+                                </tr>
+                              <tr>
+                              {% if classify == 1 %}
+{#                                  植物#}
+                                    <tr>
+                                  <th scope="row">【种属】</th>
+                                  <td>{{ herb.plclassify }}</td>
+                                </tr>
+                                  <tr>
+                                  <th scope="row">【形态】</th>
+                                  <td>{{ herb.plcha }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【生长环境】</th>
+                                  <td>{{ herb.plenvir }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【分布区域】</th>
+                                  <td>{{ herb.distribute }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【栽培技术】</th>
+                                  <td>{{ herb.cultech }}</td>
+                                </tr>
+                                  <tr>
+                                  <th scope="row">【繁殖方式】</th>
+                                  <td>{{ herb.modesofrepro }}</td>
+                                </tr>
+                                  <tr>
+                                  <th scope="row">【生长见习】</th>
+                                  <td>{{ herb.growth }}</td>
+                                </tr>
+                                   <tr>
+                                  <th scope="row">【病虫防治】</th>
+                                  <td>{{ herb.bcpre }}</td>
+                                </tr>
+                              {% elif classify == 2 %}
+{#                                  动物#}
+                                <tr>
+                                  <th scope="row">【种属】</th>
+                                  <td>{{ herb.anikind }}</td>
+                                </tr>
+                                  <tr>
+                                  <th scope="row">【形态】</th>
+                                  <td>{{ herb.anicha }}</td>
+                                  </tr>
+                                  <tr>
+                                  <th scope="row">【生长环境】</th>
+                                  <td>{{ herb.plenvir }}</td>
+                                </tr>
+                                  <tr>
+                                  <th scope="row">【产区】</th>
+                                  <td>{{ herb.proarea }}</td>
+                                  </tr>
+                                  <tr>
+                                  <th scope="row">【人工养殖】</th>
+                                  <td>{{ herb.manmade }}</td>
+                                  </tr>
+                              {% else %}
+{#                                  矿物#}
+                                  <tr>
+                                  <th scope="row">【种属】</th>
+                                  <td>{{ herb.mineralkind }}</td>
+                                    </tr>
+                                  <tr>
+                                  <th scope="row">【形态】</th>
+                                  <td>{{ herb.mineralcha }}</td>
+                                  </tr>
+                                    <tr>
+                                  <th scope="row">【生长环境】</th>
+                                  <td>{{ herb.mineralenvir }}</td>
+                                </tr>
+                                  <th scope="row">【资源分布】</th>
+                                  <td>{{ herb.resourcedis }}</td>
+                                </tr>
+                                  <th scope="row">【理化性质】</th>
+                                  <td>{{ herb.mineralnat }}</td>
+                                </tr>
+                              {% endif %}
+                                <tr>
+                                  <th scope="row">【采收加工】</th>
+                                  <td>{{ herb.machine }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【性味归经】</th>
+                                  <td>{{ herb.taste }}</td>
+                                </tr>
+                              <tr>
+                                  <th scope="row">【功能】</th>
+                                  <td>{{ herb.function }}</td>
+                                </tr>
+                              <tr>
+                                  <th scope="row">【相关论述】</th>
+                                  <td>{{ herb.discuss }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【药理作用】</th>
+                                  <td>{{ herb.medfun }}</td>
+                                </tr>
+                                 <tr>
+                                  <th scope="row">【用法用量】</th>
+                                  <td>{{ herb.usdosage }}</td>
+                                </tr>
+                                 <tr>
+                                  <th scope="row">【贮藏方法】</th>
+                                  <td>{{ herb.stomethod }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【炮制方法】</th>
+                                  <td>{{ herb.pmethod }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【禁忌】</th>
+                                  <td>{{ herb.taboo }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【毒性】</th>
+                                  <td>{{ herb.toxicity }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【毒理作用】</th>
+                                  <td>{{ herb.toxeffect }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【注意事项】</th>
+                                  <td>{{ herb.attention }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【附注】</th>
+                                  <td>{{ herb.annotation }}</td>
                                 </tr>
                               </tbody>
                             </table>

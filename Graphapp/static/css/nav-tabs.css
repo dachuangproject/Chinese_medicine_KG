@@ -76,3 +76,8 @@
     background-color: #33b35a;
     border-color: #33b35a;
 }
+
+label{
+    margin-bottom: 0;
+    padding-top: 0.5rem;
+}

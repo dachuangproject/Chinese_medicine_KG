@@ -12,7 +12,7 @@ class Efficacy(models.Model):
     efficacy_no = models.CharField(db_column='efficacy_No', primary_key=True, max_length=10)  # Field name made lowercase.
     eff_name = models.CharField(db_column='eff_Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
     eff_intro = models.CharField(max_length=255, blank=True, null=True)
-    med_mat_no = models.ForeignKey('MedMat', models.DO_NOTHING, db_column='med_mat No', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    med_mat_no = models.ForeignKey('MedMat', models.DO_NOTHING, db_column='med_mat_No', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     recipe_no = models.ForeignKey('Recipe', models.DO_NOTHING, db_column='recipe_No', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
@@ -59,13 +59,54 @@ class Marker(models.Model):
 
 
 class MedMat(models.Model):
-    med_mat_no = models.CharField(db_column='med_mat No', primary_key=True, max_length=10)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    category = models.CharField(max_length=255, blank=True, null=True)
-    dosage = models.CharField(max_length=255, blank=True, null=True)
+    med_mat_no = models.CharField(db_column='med_mat_No', primary_key=True, max_length=10)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     med_intro = models.CharField(max_length=255, blank=True, null=True)
-    med_mat_name = models.CharField(db_column='med_mat Name', max_length=255, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    med_mat_name = models.CharField(db_column='med_mat_Name', max_length=255, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    treatill= models.CharField(max_length=255, blank=True, null=True)
+    medclassify=models.IntegerField(max_length=10, blank=True, null=True)
+    taste= models.CharField(max_length=255, blank=True, null=True)
+    usdosage= models.CharField(max_length=255, blank=True, null=True)
+    plcha= models.CharField(max_length=511, blank=True, null=True)
+    plenvir= models.CharField(max_length=255, blank=True, null=True)
+    distribute= models.CharField(max_length=255, blank=True, null=True)
+    function= models.CharField(db_column='functions',max_length=255, blank=True, null=True)
+    machine= models.CharField(max_length=255, blank=True, null=True)
+    discuss= models.CharField(max_length=255, blank=True, null=True)
+    alias= models.CharField(max_length=255, blank=True, null=True)
+    plclassify= models.CharField(max_length=255, blank=True, null=True)
+    compa = models.CharField(max_length=255, blank=True, null=True)
+    pinyin = models.CharField(max_length=255, blank=True, null=True)
+    toxicity= models.CharField(max_length=255, blank=True, null=True)
+    attention= models.CharField(max_length=511, blank=True, null=True)
+    medfun= models.CharField(max_length=255, blank=True, null=True)
+    checom= models.CharField(max_length=255, blank=True, null=True)
+    pmethod= models.CharField(max_length=255, blank=True, null=True)
+    annotation= models.CharField(max_length=255, blank=True, null=True)
+    capplication= models.CharField(max_length=255, blank=True, null=True)
+    anicha= models.CharField(max_length=255, blank=True, null=True)
+    stomethod= models.CharField(max_length=255, blank=True, null=True)
+    growth = models.CharField(max_length=255, blank=True, null=True)
+    statement = models.CharField(max_length=255, blank=True, null=True)
+    cultech = models.CharField(max_length=255, blank=True, null=True)
+    modesofrepro= models.CharField(max_length=255, blank=True, null=True)
+    anikind= models.CharField(max_length=255, blank=True, null=True)
+    latin= models.CharField(max_length=255, blank=True, null=True)
+    bcpre= models.CharField(max_length=255, blank=True, null=True)
+    plregion= models.CharField(max_length=255, blank=True, null=True)
+    taboo= models.CharField(max_length=255, blank=True, null=True)
+    manmade= models.CharField(max_length=255, blank=True, null=True)
+    modresearch = models.CharField(max_length=255, blank=True, null=True)
+    resourcedis = models.CharField(max_length=255, blank=True, null=True)
+    mineralcha = models.CharField(max_length=255, blank=True, null=True)
+    mineralkind= models.CharField(max_length=255, blank=True, null=True)
+    mineralenvir= models.CharField(max_length=255, blank=True, null=True)
+    aniregion= models.CharField(max_length=255, blank=True, null=True)
+    mineralnat= models.CharField(max_length=255, blank=True, null=True)
+    mainkind= models.CharField(max_length=255, blank=True, null=True)
+    proarea= models.CharField(max_length=255, blank=True, null=True)
+    toxeffect= models.CharField(max_length=255, blank=True, null=True)
+    adverserea= models.CharField(max_length=255, blank=True, null=True)
     recipe_no = models.ForeignKey('Recipe', models.DO_NOTHING, db_column='recipe_No', blank=True, null=True)  # Field name made lowercase.
-    med_mat_Latin_name = models.CharField(db_column='med_mat Latin_Name', max_length=255, blank=True, null=True)
 
     class Meta:
         managed = True
@@ -80,7 +121,7 @@ class Molecule(models.Model):
     molecule_str = models.CharField(max_length=255, blank=True, null=True)
     synonyms = models.CharField(max_length=255, blank=True, null=True)
     marker_no = models.ForeignKey(Marker, models.DO_NOTHING, db_column='marker_No', blank=True, null=True)  # Field name made lowercase.
-    med_mat_no = models.ForeignKey(MedMat, models.DO_NOTHING, db_column='med_mat No', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    med_mat_no = models.ForeignKey(MedMat, models.DO_NOTHING, db_column='med_mat_No', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
 
     class Meta:
         managed = True
@@ -90,12 +131,25 @@ class Molecule(models.Model):
 class Recipe(models.Model):
     recipe_no = models.CharField(db_column='recipe_No', primary_key=True, max_length=10)  # Field name made lowercase.
     recipe_name = models.CharField(db_column='recipe_Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    fangyi = models.CharField(max_length=500, blank=True, null=True)
-    classify = models.CharField(max_length=255, blank=True, null=True)
-    for_in_verse = models.CharField(max_length=255, blank=True, null=True)
-    comprise = models.CharField(max_length=255, blank=True, null=True)
+    composition = models.CharField(max_length=255, blank=True, null=True)
     provenance = models.CharField(max_length=255, blank=True, null=True)
-    usage = models.CharField(max_length=255, blank=True, null=True)
+    zhuzhi = models.CharField(max_length=255, blank=True, null=True)
+    usage = models.CharField(db_column='usages', max_length=255, blank=True, null=True)
+    fufang = models.CharField(max_length=255, blank=True, null=True)
+    imliter = models.CharField(max_length=511, blank=True, null=True)
+    recfunction=models.CharField(max_length=255, blank=True, null=True)
+    fangyi = models.CharField(max_length=511, blank=True, null=True)
+    plusedreduced=models.CharField(max_length=255, blank=True, null=True)
+    recalias=models.CharField(max_length=255, blank=True, null=True)
+    cautioninuse=models.CharField(max_length=255, blank=True, null=True)
+    apply=models.CharField(max_length=255, blank=True, null=True)
+    for_in_verse = models.CharField(max_length=255, blank=True, null=True)
+    compatibilitycha= models.CharField(max_length=255, blank=True, null=True)
+    diffdiscuss= models.CharField(max_length=255, blank=True, null=True)
+    classify = models.CharField(max_length=255, blank=True, null=True)
+    identify= models.CharField(max_length=511, blank=True, null=True)
+    recmethod= models.CharField(max_length=255, blank=True, null=True)
+    interememory = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = True

@@ -1,23 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}药材知识库{% endblock %}
+{% block title %}查询分析{% endblock %}
 
 {% block content %}
 <br>
             <div class="container-fluid">
                 <!-- Page Header-->
                 <header>
-                    <h1 class="h3 display">药材知识库</h1>
+                    <h1 class="h3 display">查询分析</h1>
                 </header>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{% url 'herbindex' %}" method="get">
-                                    <div class="form-group row" style="margin-left: 250px;" >
-                                        <label class="form-control-label" style=" margin-bottom: 0;padding-top: 0.5rem;">药材名称</label>
+                                <form action="{% url 'Analysisindex' %}" method="get">
+                                    <div class="form-group row" style="margin-left: 150px;" >
+                                        <label class="form-control-label" >药材名称</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="search-herb-text" value="{{ search_text }}" placeholder="示例：金银花" style="vertical-align: middle;">
+                                            <input type="text" class="form-control" name="search-text1" value="{{ search_text1 }}" placeholder="示例：金银花" style="vertical-align: middle;">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" name="search-text2" value="{{ search_text2 }}" placeholder="示例：甘草" style="vertical-align: middle;">
                                         </div>
                                         <div class="col-sm-2 " style="text-align: right;">
                                             <button class="btn btn-primary" type="submit">检索</button>
@@ -28,7 +31,8 @@
                         </div>
                     </div>
                 </div>
-    {% if search_text %}
+
+    {% if search_text1 or search_text2 %}
         <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -37,9 +41,9 @@
                             <h2 class="h5">搜索结果</h2>
                             {% for herb in herb_list %}
                                 <div class="list-group">
-                                  <a href="{% url 'Search_herb' herb.med_mat_name %} " class="list-group-item list-group-item-action flex-column align-items-start">
+                                  <a href="{% url 'Analysis' herb %} " class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
-                                      <h5 class="mb-1" >{{ herb.med_mat_name }}</h5>
+                                      <h5 class="mb-1" >{{ herb }}</h5>
                                     </div>
                                   </a>
                                 </div>
@@ -49,12 +53,12 @@
                                     <div class="m-auto">
                                         <span class="step-links">
                                             <!-- 如果不是第一页，则显示上翻按钮 -->
-                                            {% if recipe_list.has_previous %}
-                                                <a href="?search-herb-text={{ search_text }}&page=1" class="btn btn-success">
+                                            {% if herb_list.has_previous %}
+                                                <a href="?search-text1={{ search_text1 }}&search-text2={{ search_text2 }}&page=1" class="btn btn-success">
                                                     &laquo; 1
                                                 </a>
                                                 <span>...</span>
-                                                <a href="?search-herb-text={{ search_text }}&page={{ herb_list.previous_page_number }}"
+                                                <a href="?search-text1={{ search_text1 }}&search-text2={{ search_text2 }}&page={{ herb_list.previous_page_number }}"
                                                    class="btn btn-secondary"
                                                 >
                                                     {{ herb_list.previous_page_number }}
@@ -64,15 +68,16 @@
                                             <span class="current btn btn-success btn-lg">
                                                 {{ herb_list.number }}
                                             </span>
+
                                             <!-- 如果不是最末页，则显示下翻按钮 -->
                                             {% if herb_list.has_next %}
-                                                <a href="?search-herb-text={{ search_text }}&page={{ herb_list.next_page_number }}"
+                                                <a href="?search-text1={{ search_text1 }}&search-text2={{ search_text2 }}&page={{ herb_list.next_page_number }}"
                                                    class="btn btn-secondary"
                                                 >
                                                     {{ herb_list.next_page_number }}
                                                 </a>
                                                 <span>...</span>
-                                                <a href="?search-herb-text={{ search_text }}&page={{ herb_list.paginator.num_pages }}"
+                                                <a href="?search-text1={{ search_text1 }}&search-text2={{ search_text2 }}&page={{ herb_list.paginator.num_pages }}"
                                                    class="btn btn-success"
                                                 >
                                                     {{ herb_list.paginator.num_pages }} &raquo;
@@ -86,13 +91,20 @@
                                 <br>
                                 <p class="card-subtitle mb-2 text-muted">您可以:</p>
                                 <p class="card-text">1.检查检索词是否有误或者过于复杂</p>
-                                <p class="card-text">2.在其他栏目中搜索“{{ search_text }}”</p>
-                                <a href="{% url 'herbindex' %}" class="card-link">返回</a>
+                                {% if search_text1 and search_text2 %}
+                                    <p class="card-text">2.在其他栏目中搜索“{{ search_text1 }}”和“{{ search_text2 }}”</p>
+                                {% elif search_text1 %}
+                                    <p class="card-text">2.在其他栏目中搜索“{{ search_text1 }}”</p>
+                                {% else %}
+                                    <p class="card-text">2.在其他栏目中搜索“{{ search_text2 }}”</p>
+                                {% endif %}
+                                    <a href="{% url 'Analysisindex' %}" class="card-link">返回</a>
                              {% endif %}
                         </div>
                     </div>
                 </div>
         </div>
-    {% endif %}
+{% endif %}
     </div>
 {% endblock %}
+

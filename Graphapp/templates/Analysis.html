@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}查询分析{% endblock %}
+
+{% block content %}
+    <!-- Counts Section -->
+    <br>
+        <div class="container-fluid">
+            <!-- Page Header-->
+            <header>
+                <h1 class="h3 display">查询分析</h1>
+            </header>
+            <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url 'Analysisindex' %}" method="get">
+                            <div class="form-group row" style="margin-left: 250px;" >
+                                <label class="form-control-label" >方剂名称</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="search-text2"  value="{{ search_text1 }}" style="vertical-align: middle;">
+                                </div>
+                                <div class="col-sm-4">
+                                            <input type="text" class="form-control" name="search-text2" value="{{ search_text2 }}" placeholder="示例：" style="vertical-align: middle;">
+                                        </div>
+                                <div class="col-sm-2 " style="text-align: right;">
+                                    <button class="btn btn-primary" type="submit">检索</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="h5">{{ name }}</h2>
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                                    <li role="presentation" ><a href="#com" aria-controls="com" role="tab" aria-expanded="false" data-toggle="tab" id="com-tab">共同组分</a></li>
+                                    <li role="presentation" ><a href="#gene" aria-controls="gene" role="tab" aria-expanded="false" data-toggle="tab" id="gene-tab">共同基因</a></li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content" id="myTabContent">
+                                    <div role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade" id="com">
+                                        <div class="row">
+                                                <div class="list-group" id="list-tab" role="tablist">
+                                                    {% if coms %}
+                                                        {% for component in coms %}
+                                                        <div class="list-group">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                              <h5 class="mb-1" >{{ component.molecule_name }}</h5>
+                                                            </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <p>没有查找到共同组分</p>
+                                                    {% endif %}
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" aria-labelledby="messages-tab" class="tab-pane fade" id="gene">
+                                        <div class="row">
+                                                <div class="list-group" id="list-tab" role="tablist">
+                                                    {% if markers %}
+                                                        {% for marker in markers %}
+                                                        <div class="list-group">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                              <h5 class="mb-1" >{{ marker.marker_name }}</h5>
+                                                            </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <p>没有查找到共同基因</p>
+                                                    {% endif %}
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+{% endblock %}
