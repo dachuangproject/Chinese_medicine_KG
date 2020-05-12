@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}查询分析{% endblock %}
+{% block title %}药材成分对比分析{% endblock %}
 
 {% block content %}
 <br>
             <div class="container-fluid">
                 <!-- Page Header-->
                 <header>
-                    <h1 class="h3 display">查询分析</h1>
+                    <h1 class="h3 display">药材成分对比分析</h1>
                 </header>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
                                 <form action="{% url 'Analysisindex' %}" method="get">
-                                    <div class="form-group row" style="margin-left: 150px;" >
+                                    <div class="form-group row" style="margin-left: 15%;" >
                                         <label class="form-control-label" >药材名称</label>
                                         <div class="col-sm-4">
                                             <input type="text" class="form-control" name="search-text1" value="{{ search_text1 }}" placeholder="示例：金银花" style="vertical-align: middle;">

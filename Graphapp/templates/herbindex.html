@@ -14,7 +14,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <form action="{% url 'herbindex' %}" method="get">
-                                    <div class="form-group row" style="margin-left: 250px;" >
+                                    <div class="form-group row" style="margin-left: 25%;" >
                                         <label class="form-control-label" style=" margin-bottom: 0;padding-top: 0.5rem;">药材名称</label>
                                         <div class="col-sm-4">
                                             <input type="text" class="form-control" name="search-herb-text" value="{{ search_text }}" placeholder="示例：金银花" style="vertical-align: middle;">
@@ -35,15 +35,15 @@
                         <div class="card-body">
                             {% if herb_list %}
                             <h2 class="h5">搜索结果</h2>
-                            {% for herb in herb_list %}
-                                <div class="list-group">
+                              <div class="list-group">
+                                {% for herb in herb_list %}
                                   <a href="{% url 'Search_herb' herb.med_mat_name %} " class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
                                       <h5 class="mb-1" >{{ herb.med_mat_name }}</h5>
                                     </div>
                                   </a>
-                                </div>
                                 {% endfor %}
+                               </div>
                                 <br>
                                 <div class="pagination row">
                                     <div class="m-auto">

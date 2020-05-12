@@ -14,7 +14,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <form action="{% url 'index' %}" method="get">
-                                    <div class="form-group row" style="margin-left: 250px;">
+                                    <div class="form-group row"  style="margin-left: 25%;">
                                         <label class="form-control-label" style=" margin-bottom: 0;padding-top: 0.5rem;">方剂名称</label>
                                         <div class="col-sm-4">
                                             <input type="text" class="form-control" name="search-recipe-text" value="{{ search_text }}" placeholder="示例：四妙勇安汤" style="vertical-align: middle;">
@@ -35,15 +35,15 @@
                         <div class="card-body">
                             {% if recipe_list %}
                             <h2 class="h5">搜索结果</h2>
-                            {% for recipe in recipe_list %}
                                 <div class="list-group">
+                                {% for recipe in recipe_list %}
                                   <a href="{% url 'Search_recipe' recipe.recipe_name %} " class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
                                       <h5 class="mb-1" >{{ recipe.recipe_name }}</h5>
                                     </div>
                                   </a>
-                                </div>
                                 {% endfor %}
+                                </div>
 {#                                {% if data %}#}
 {#                                    <ul id="pages" class="pagination pagination-sm pagination-xs">#}
 {#                                        {% if data.first %}#}
@@ -122,7 +122,6 @@
                     </div>
                 </div>
         </div>
-
 {% endif %}
     </div>
 {% endblock %}

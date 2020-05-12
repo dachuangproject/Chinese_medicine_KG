@@ -1,23 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}首页{% endblock %}
+{% block title %}方剂成分对比分析{% endblock %}
 
 {% block content %}
 <br>
             <div class="container-fluid">
                 <!-- Page Header-->
                 <header>
-                    <h1 class="h3 display">组分知识库</h1>
+                    <h1 class="h3 display">方剂成分对比分析</h1>
                 </header>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{% url 'Comindex' %}" method="get">
-                                    <div class="form-group row" style="margin-left: 25%;" >
-                                        <label class="form-control-label" >组分分子名称</label>
+                                <form action="{% url 'FAnalyindex' %}" method="get">
+                                    <div class="form-group row" style="margin-left: 15%;" >
+                                        <label class="form-control-label" >方剂名称</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="search-com-text" value="{{ search_text }}" placeholder="示例：Assafoetidnol B" style="vertical-align: middle;">
+                                            <input type="text" class="form-control" name="search-text1" value="{{ search_text1 }}" placeholder="示例：" style="vertical-align: middle;">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" name="search-text2" value="{{ search_text2 }}" placeholder="示例：" style="vertical-align: middle;">
                                         </div>
                                         <div class="col-sm-2 " style="text-align: right;">
                                             <button class="btn btn-primary" type="submit">检索</button>
@@ -28,18 +31,18 @@
                         </div>
                     </div>
                 </div>
-{% if search_text  %}
+    {% if search_text1 or search_text2 %}
         <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            {% if molecule_list %}
+                            {% if formula_list %}
                             <h2 class="h5">搜索结果</h2>
                                 <div class="list-group">
-                                {% for molecule in molecule_list %}
-                                  <a href="{% url 'Search_com' molecule.molecule_name %} " class="list-group-item list-group-item-action flex-column align-items-start">
+                                {% for formula in formula_list %}
+                                  <a href="{% url 'FAnalysis' formula %} " class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
-                                      <h5 class="mb-1" >{{ molecule.molecule_name }}</h5>
+                                      <h5 class="mb-1" >{{ formula }}</h5>
                                     </div>
                                   </a>
                                 {% endfor %}
@@ -49,34 +52,34 @@
                                     <div class="m-auto">
                                         <span class="step-links">
                                             <!-- 如果不是第一页，则显示上翻按钮 -->
-                                            {% if molecule_list.has_previous %}
-                                                <a href="?search-com-text={{ search_text }}&page=1" class="btn btn-success">
+                                            {% if formula_list.has_previous %}
+                                                <a href="?search-text1={{ search_text1 }}&search-text2={{ search_text2 }}&page=1" clzass="btn btn-success">
                                                     &laquo; 1
                                                 </a>
                                                 <span>...</span>
-                                                <a href="?search-com-text={{ search_text }}&page={{ molecule_list.previous_page_number }}"
+                                                <a href="?search-text1={{ search_text1 }}&search-text2={{ search_text2 }}&page={{ formula_list.previous_page_number }}"
                                                    class="btn btn-secondary"
                                                 >
-                                                    {{ molecule_list.previous_page_number }}
+                                                    {{ formula_list.previous_page_number }}
                                                 </a>
                                             {% endif %}
-
                                             <!-- 当前页面 -->
                                             <span class="current btn btn-success btn-lg">
-                                                {{ molecule_list.number }}
+                                                {{ formula_list.number }}
                                             </span>
+
                                             <!-- 如果不是最末页，则显示下翻按钮 -->
-                                            {% if molecule_list.has_next %}
-                                                <a href="?search-com-text={{ search_text }}&page={{ molecule_list.next_page_number }}"
+                                            {% if formula_list.has_next %}
+                                                <a href="?search-text1={{ search_text1 }}&search-text2={{ search_text2 }}&page={{ formula_list.next_page_number }}"
                                                    class="btn btn-secondary"
                                                 >
-                                                    {{ molecule_list.next_page_number }}
+                                                    {{ formula_list.next_page_number }}
                                                 </a>
                                                 <span>...</span>
-                                                <a href="?search-com-text={{ search_text }}&page={{ molecule_list.paginator.num_pages }}"
+                                                <a href="?search-text1={{ search_text1 }}&search-text2={{ search_text2 }}&page={{ formula_list.paginator.num_pages }}"
                                                    class="btn btn-success"
                                                 >
-                                                    {{ molecule_list.paginator.num_pages }} &raquo;
+                                                    {{ formula_list.paginator.num_pages }} &raquo;
                                                 </a>
                                             {% endif %}
                                         </span>
@@ -87,8 +90,14 @@
                                 <br>
                                 <p class="card-subtitle mb-2 text-muted">您可以:</p>
                                 <p class="card-text">1.检查检索词是否有误或者过于复杂</p>
-                                <p class="card-text">2.在其他栏目中搜索“{{ search_text }}”</p>
-                                <a href="{% url 'Comindex' %}" class="card-link">返回</a>
+                                {% if search_text1 and search_text2 %}
+                                    <p class="card-text">2.在其他栏目中搜索“{{ search_text1 }}”和“{{ search_text2 }}”</p>
+                                {% elif search_text1 %}
+                                    <p class="card-text">2.在其他栏目中搜索“{{ search_text1 }}”</p>
+                                {% else %}
+                                    <p class="card-text">2.在其他栏目中搜索“{{ search_text2 }}”</p>
+                                {% endif %}
+                                    <a href="{% url 'FAnalyindex' %}" class="card-link">返回</a>
                              {% endif %}
                         </div>
                     </div>

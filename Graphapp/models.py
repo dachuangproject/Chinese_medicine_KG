@@ -50,6 +50,7 @@ class Marker(models.Model):
     marker_name = models.CharField(db_column='marker_Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
     marker_cat = models.CharField(max_length=255, blank=True, null=True)
     marker_intro = models.CharField(max_length=255, blank=True, null=True)
+    diseasesName = models.CharField(max_length=1000, blank=True, null=True)
     illness_no = models.ForeignKey(Illness, models.DO_NOTHING, db_column='illness_No', blank=True, null=True)  # Field name made lowercase.
     med_mat_no = models.ForeignKey('MedMat', models.DO_NOTHING, db_column='med_mat_No', blank=True, null=True)  # Field name made lowercase.
 
@@ -57,13 +58,24 @@ class Marker(models.Model):
         managed = True
         db_table = 'marker'
 
+class Reccom(models.Model):
+    reccom_no = models.CharField(db_column='reccom_No', primary_key=True, max_length=10)
+    dosage1= models.CharField(max_length=255, blank=True, null=True)
+    dosage2= models.CharField(max_length=255, blank=True, null=True)
+    mark= models.CharField(max_length=255, blank=True, null=True)
+    recipe_no= models.CharField(db_column='recipe_No',max_length=10, blank=True, null=True)
+    med_mat_name= models.CharField(db_column='med_mat Name',max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'reccom'
 
 class MedMat(models.Model):
     med_mat_no = models.CharField(db_column='med_mat_No', primary_key=True, max_length=10)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     med_intro = models.CharField(max_length=255, blank=True, null=True)
     med_mat_name = models.CharField(db_column='med_mat_Name', max_length=255, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     treatill= models.CharField(max_length=255, blank=True, null=True)
-    medclassify=models.IntegerField(max_length=10, blank=True, null=True)
+    medclassify=models.IntegerField( blank=True, null=True)
     taste= models.CharField(max_length=255, blank=True, null=True)
     usdosage= models.CharField(max_length=255, blank=True, null=True)
     plcha= models.CharField(max_length=511, blank=True, null=True)
@@ -91,7 +103,7 @@ class MedMat(models.Model):
     modesofrepro= models.CharField(max_length=255, blank=True, null=True)
     anikind= models.CharField(max_length=255, blank=True, null=True)
     latin= models.CharField(max_length=255, blank=True, null=True)
-    bcpre= models.CharField(max_length=255, blank=True, null=True)
+    bcpre= models.CharField(max_length=511, blank=True, null=True)
     plregion= models.CharField(max_length=255, blank=True, null=True)
     taboo= models.CharField(max_length=255, blank=True, null=True)
     manmade= models.CharField(max_length=255, blank=True, null=True)
@@ -106,22 +118,28 @@ class MedMat(models.Model):
     proarea= models.CharField(max_length=255, blank=True, null=True)
     toxeffect= models.CharField(max_length=255, blank=True, null=True)
     adverserea= models.CharField(max_length=255, blank=True, null=True)
-    recipe_no = models.ForeignKey('Recipe', models.DO_NOTHING, db_column='recipe_No', blank=True, null=True)  # Field name made lowercase.
+
 
     class Meta:
         managed = True
         db_table = 'med_mat'
 
 
+
 class Molecule(models.Model):
     molecule_no = models.CharField(db_column='molecule_No', primary_key=True, max_length=10)  # Field name made lowercase.
     molecule_name = models.CharField(db_column='molecule_Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
     molecule_formula = models.CharField(max_length=255, blank=True, null=True)
-    molar_mass = models.CharField(db_column='molar mass', max_length=255, blank=True, null=True)  # Field renamed to remove unsuitable characters.
-    molecule_str = models.CharField(max_length=255, blank=True, null=True)
-    synonyms = models.CharField(max_length=255, blank=True, null=True)
-    marker_no = models.ForeignKey(Marker, models.DO_NOTHING, db_column='marker_No', blank=True, null=True)  # Field name made lowercase.
-    med_mat_no = models.ForeignKey(MedMat, models.DO_NOTHING, db_column='med_mat_No', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    ML = models.DecimalField(max_digits=20, decimal_places=2,blank=True, null=True)
+    AlogP = models.DecimalField(max_digits=20, decimal_places=2,blank=True, null=True)
+    Hdon = models.DecimalField(max_digits=20, decimal_places=2,blank=True, null=True)
+    Hacc = models.DecimalField(max_digits=20, decimal_places=2,blank=True, null=True)
+    OB = models.DecimalField(max_digits=20, decimal_places=2,blank=True, null=True)
+    Caco = models.DecimalField(db_column='Caco-2',max_digits=20, decimal_places=2,blank=True, null=True) #Caco-2
+    BBB = models.DecimalField(max_digits=20, decimal_places=2,blank=True, null=True)
+    DL = models.DecimalField(max_digits=20, decimal_places=2,blank=True, null=True)
+    FASA = models.DecimalField(db_column='FASA-',max_digits=20, decimal_places=2,blank=True, null=True)#FASA-
+    HL = models.DecimalField(max_digits=20, decimal_places=2,blank=True, null=True)
 
     class Meta:
         managed = True
@@ -170,3 +188,27 @@ class Symptom(models.Model):
     class Meta:
         managed = True
         db_table = 'symptom'
+
+class Tamol(models.Model):
+    tgmol_no = models.CharField(db_column='tgmol_No', primary_key=True, max_length=10)  # Field name made lowercase.
+    molecular_name = models.CharField(db_column='molecularName', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    tg_name = models.CharField(db_column='tgName',max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'tamol'
+
+class Herbsmol(models.Model):
+    herbsmol_no = models.CharField(db_column='herbsmol_No', primary_key=True, max_length=10)  # Field name made lowercase.
+    herbs_name = models.CharField(db_column='herbs_Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    molecular_name = models.CharField(db_column='molecularName',max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'herbsmol'
+
+
+
+
+
+

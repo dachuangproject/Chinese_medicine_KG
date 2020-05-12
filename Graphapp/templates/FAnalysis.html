@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}药材成分对比分析{% endblock %}
+{% block title %}方剂成分对比分析{% endblock %}
 
 {% block content %}
     <!-- Counts Section -->
@@ -8,20 +8,20 @@
         <div class="container-fluid">
             <!-- Page Header-->
             <header>
-                <h1 class="h3 display">药材成分对比分析</h1>
+                <h1 class="h3 display">方剂成分对比分析</h1>
             </header>
             <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{% url 'Analysisindex' %}" method="get">
+                        <form action="{% url 'FAnalyindex' %}" method="get">
                             <div class="form-group row" style="margin-left: 15%;" >
                                 <label class="form-control-label" >药材名称</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="search-text1"  value="{{ herb1 }}" style="vertical-align: middle;">
+                                    <input type="text" class="form-control" name="search-text1"  value="{{ formula1 }}" style="vertical-align: middle;">
                                 </div>
                                 <div class="col-sm-4">
-                                     <input type="text" class="form-control" name="search-text2" value="{{ herb2 }}"  style="vertical-align: middle;">
+                                     <input type="text" class="form-control" name="search-text2" value="{{ formula2 }}"  style="vertical-align: middle;">
                                 </div>
                                 <div class="col-sm-2 " style="text-align: right;">
                                     <button class="btn btn-primary" type="submit">检索</button>
@@ -36,15 +36,50 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="h5">{{ name }}</h2>
+                            <h2 class="h5">{{ formula1  }} {{ formula2  }}</h2>
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs" role="tablist" id="myTabs">
-                                    <li role="presentation" ><a href="#com" aria-controls="com" role="tab" aria-expanded="true" data-toggle="tab" id="com-tab">共同组分分子</a></li>
+                                    <li role="presentation" ><a href="#herb" aria-controls="herb" role="tab" aria-expanded="true" data-toggle="tab" id="herb-tab">中药成分</a></li>
+                                    <li role="presentation" ><a href="#com" aria-controls="com" role="tab" aria-expanded="false" data-toggle="tab" id="com-tab">共同组分分子</a></li>
                                     <li role="presentation" ><a href="#gene" aria-controls="gene" role="tab" aria-expanded="false" data-toggle="tab" id="gene-tab">共同靶标</a></li>
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content" id="myTabContent">
-                                    <div role="tabpanel" aria-labelledby="profile-tab" class="tab-pane active" id="com">
+                                    <div role="tabpanel" aria-labelledby="profile-tab" class="tab-pane active" id="herb">
+                                        <div class="container">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                    {% if herbs1 %}
+                                                        {% for herb1 in herbs1 %}
+                                                         <a href="{% url 'Search_herb' herb1 %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                              <h5 class="mb-1" >{{ herb1 }}</h5>
+                                                            </div>
+                                                            </a>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <br>
+                                                        <div class="row" style="text-align: center"><p style="margin:0 auto;width:200px;">没有查找到中药成分</p></div>
+                                                    {% endif %}
+                                            </div>
+                                             <div class="col-6">
+                                                    {% if herbs2 %}
+                                                        {% for herb2 in herbs2 %}
+                                                         <a href="{% url 'Search_herb' herb2 %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                              <h5 class="mb-1" >{{ herb2 }}</h5>
+                                                            </div>
+                                                            </a>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <br>
+                                                        <div class="row" style="text-align: center"><p style="margin:0 auto;width:200px;">没有查找到中药成分</p></div>
+                                                    {% endif %}
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade" id="com">
                                             <div class="list-group" id="list-tab" role="tablist">
                                                     {% if mol %}
                                                         {% for component in mol %}

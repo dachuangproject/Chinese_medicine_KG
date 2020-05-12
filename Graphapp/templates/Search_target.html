@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}基因知识库{% endblock %}
+
+{% block content %}
+    <!-- Counts Section -->
+    <br>
+        <div class="container-fluid">
+            <!-- Page Header-->
+            <header>
+                <h1 class="h3 display">靶标知识库</h1>
+            </header>
+            <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url 'Geneindex' %}" method="get">
+                            <div class="form-group row" style="margin-left: 25%;" >
+                                <label class="form-control-label" >靶标名称</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="search-gene-text"  value="{{ name }}" style="vertical-align: middle;">
+                                </div>
+                                <div class="col-sm-2 " style="text-align: right;">
+                                    <button class="btn btn-primary" type="submit">检索</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                        {% if target %}
+                            <h2 class="h5">{{ target.marker_name}}————相关疾病</h2>
+                            <table class="table table-hover">
+                              <tbody>
+                              {% for disease in diseases %}
+                                <tr>
+                                  <td>{{ disease }}</td>
+                                </tr>
+                              {% endfor %}
+                              </tbody>
+                            </table>
+                        {% else %}
+                        <h2 class="card-title">未找到相关结果</h2>
+                                <br>
+                                <p class="card-subtitle mb-2 text-muted">您可以:</p>
+                                <p class="card-text">1.检查检索词是否有误或者过于复杂</p>
+                                <p class="card-text">2.在其他栏目中搜索“{{ name }}”</p>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+

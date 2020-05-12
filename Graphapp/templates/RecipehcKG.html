@@ -36,10 +36,10 @@
                     <div class="card">
                         <div class="card-body">
                              <form action="{% url 'Recipehcindex' %}" method="get">
-                            <div class="form-group row" style="margin-left: 300px;" >
+                            <div class="form-group row" style="margin-left: 25%;" >
                                 <label class="form-control-label" >方剂名称</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="search-recipehcKG-text"  style="vertical-align: middle;">
+                                    <input type="text" class="form-control" id="search-recipehcKG-text" value="{{ recipe_mame }}" style="vertical-align: middle;">
                                 </div>
                                 <div class="col-sm-2 " style="text-align: right;">
                                     <button class="btn btn-primary" id="button">检索</button>
@@ -59,16 +59,15 @@
 	                        </div>
                          <div id="id1">
                              <script type="text/javascript">
-                                var height=600;
-                                var width=1050;
+                                var height=1000;
+                                var width=927;
                                 var names=['方剂','药材','组分分子']
-{#                                 var colors = ['#6ca46c', '#4e88af', '#ca635f', '#d2907c', '#d6744d', '#ded295']#}
 
-                                    var colors = ['#6ca46c', '#4e88af', '#ca635f',];
+                                    var colors = ['#7fff00', '#1e90ff', '#ffb6c1',];
 
-                                    var colors_text=['#404040'];//文本颜色
+                                    var colors_text=['#000000'];//文本颜色
 
-                                    var colors_links=['#404040'];//线颜色
+                                    var colors_links=['#A9A9A9'];//线颜色
                                 //补充CSS样式设置字体布局
                                     for (var i=0; i < names.length; i++) {
                                         $('#indicator').append("<div><span style='background-color:" + colors[i] + "'></span>" + names[i] + "</div>");
@@ -84,7 +83,9 @@
 	                                    .force("link", d3.forceLink().id(function(d) {
 	                                        return d.id;
 	                                    }))
-	                                    .force("charge", d3.forceManyBody().strength(-700))
+	                                    .force("charge", d3.forceManyBody().strength(-200))
+                                        .force('x', d3.forceX(width / 2))
+                                        .force('y', d3.forceY(height / 2))
 	                                    .force("center", d3.forceCenter(width / 2, height / 2));
 
 {#                                  存储关系图的数据#}
@@ -99,7 +100,7 @@
 	    	                        var link = svg.append("g").attr("class","links").selectAll("line").data(graph.links).enter()
 	    	                        .append("line").attr("stroke-width", function(d) {
 	    		                        //return Math.sqrt(d.value);
-	    		                        return 3;
+	    		                        return 1;
 	    	                        }).attr("stroke", function() {
 	    		                        return colors_links;
 	    	                        })
@@ -116,7 +117,11 @@
 	    		                        return colors[d.group];
 	    	                        }).attr("stroke", "none").attr("name", function(d) {
 	    		                        return d.id;
-	    	                        }).call(d3.drag()
+	    	                        }).attr("cx", function(d) {
+                                        return d.x = Math.max(width/2);
+                                    }).attr("cy", function(d) {
+                                        return d.y = Math.max(height/2);
+                                    }).call(d3.drag()
 	    		                        .on("start", dragstarted)
 	    		                        .on("drag", dragged)
 	    		                        .on("end", dragended)
@@ -209,7 +214,110 @@
                                         return 'translate(' + d.x + ',' + (d.y + d.size / 2) + ')';
                                     });
                                 }
-                            </script>
+
+{#                                 //为svg1父元素下的.nodes circle元素绑定鼠标进入事件#}
+{#    	$('#id1').on('mouseenter', '.nodes circle', function(event) {#}
+{#    		//通过变量dragging保证拖动鼠标时，其状态不受影响，从而改变图形#}
+{#    		//鼠标没有拖动才能处理事件#}
+{#    		if(!dragging) {#}
+{#    			//获取被选中元素的名字#}
+{#	    		var name = $(this).attr("name");#}
+{##}
+{#	    		//选择#svg1 .nodes中所有的circle，再增加个class#}
+{#	    		d3.select('#svg1 .nodes').selectAll('circle').attr('class', function(d) {#}
+{#	    			//数据的id是否等于name,返回空#}
+{#	    			if(d.id==name) {#}
+{#	    				return '';#}
+{#	    			}#}
+{#	    			//当前节点返回空，否则其他节点循环判断是否被隐藏起来(CSS设置隐藏)#}
+{#	    			else {#}
+{#	    				//links链接的起始节点进行判断,如果其id等于name则显示这类节点#}
+{#	    				//注意: graph=data#}
+{#	    				for (var i = 0; i < graph.links.length; i++) {#}
+{#	    					//如果links的起点等于name，并且终点等于正在处理的则显示#}
+{#		                    if (graph.links[i]['source'].id == name && graph.links[i]['target'].id == d.id) {#}
+{#		                        return '';#}
+{#		                    }#}
+{#		                    if (graph.links[i]['target'].id == name && graph.links[i]['source'].id == d.id) {#}
+{#		                        return '';#}
+{#		                    }#}
+{#		                }#}
+{##}
+{#	    				return "inactive"; //前面CSS定义 .nodes circle.inactive#}
+{#	    			}#}
+{#	    		});#}
+{##}
+{#	    		//处理相邻的边line是否隐藏 注意 ||#}
+{#	    		d3.select("#id1 .links").selectAll('line').attr('class', function(d) {#}
+{#	                if (d.source.id == name || d.target.id == name) {#}
+{#	                    return '';#}
+{#	                } else {#}
+{#	                    return 'inactive';#}
+{#	                }#}
+{#	            });#}
+{#    		}#}
+{#   		});#}
+{##}
+{#    	//鼠标移开还原原图，显示所有隐藏的点及边#}
+{#    	$('#id1').on('mouseleave', '.nodes circle', function(event) {#}
+{#    		//如果dragging为false才处理事件#}
+{#    		if(!dragging) {#}
+{#    			d3.select('#svg1 .nodes').selectAll('circle').attr('class', '');#}
+{#           		d3.select('#svg1 .links').selectAll('line').attr('class', '');#}
+{#    		}#}
+{#	    });#}
+{##}
+{##}
+{#    	//鼠标进入文本显示相邻节点及边#}
+{#    	$('#id1').on('mouseenter', '.texts text', function(event) {#}
+{#	        if (!dragging) {#}
+{#	            var name = $(this).attr('name');#}
+{##}
+{#	            $('#info h4').css('color', $(this).attr('fill')).text(name);#}
+{#	            $('#info p').remove();#}
+{#	            for (var key in info[name]) {#}
+{#	                if (typeof(info[name][key]) == 'object') {#}
+{#	                    continue;#}
+{#	                }#}
+{#	                if (key == 'url' || key == 'title' || key == 'name' || key == 'edited' || key == 'created' || key == 'homeworld') {#}
+{#	                    continue;#}
+{#	                }#}
+{#	                $('#info').append('<p><span>' + key + '</span>' + info[name][key] + '</p>');#}
+{#	            }#}
+{##}
+{#	            d3.select('#svg1 .texts').selectAll('text').attr('class', function(d) {#}
+{#	                if (d.id == name) {#}
+{#	                    return '';#}
+{#	                }#}
+{##}
+{#	                for (var i = 0; i < graph.links.length; i++) {#}
+{#	                    if (graph.links[i]['source'].id == name && graph.links[i]['target'].id == d.id) {#}
+{#	                        return '';#}
+{#	                    }#}
+{#	                    if (graph.links[i]['target'].id == name && graph.links[i]['source'].id == d.id) {#}
+{#	                        return '';#}
+{#	                    }#}
+{#	                }#}
+{#	                return 'inactive';#}
+{#	            });#}
+{#	            d3.select("#svg1 .links").selectAll('line').attr('class', function(d) {#}
+{#	                if (d.source.id == name || d.target.id == name) {#}
+{#	                    return '';#}
+{#	                } else {#}
+{#	                    return 'inactive';#}
+{#	                }#}
+{#	            });#}
+{#	        }#}
+{#	    });#}
+{##}
+{#    	//鼠标移除文本还原相应节点及边#}
+{#	    $('#id1').on('mouseleave', '.texts text', function(event) {#}
+{#             if (!dragging) {#}
+{#	            d3.select('#svg1 .texts').selectAll('text').attr('class', '');#}
+{#	            d3.select('#svg1 .links').selectAll('line').attr('class', '');#}
+{#	        }#}
+{#	    });#}
+                              </script>
                              </div>
                           </div>
                        </div>

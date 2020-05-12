@@ -15,10 +15,10 @@
                 <div class="card">
                     <div class="card-body">
                         <form action="{% url 'herbindex' %}" method="get">
-                            <div class="form-group row" style="margin-left: 250px;" >
+                            <div class="form-group row" style="margin-left: 25%;" >
                                 <label class="form-control-label" >药材名称</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="search-herb-text"  style="vertical-align: middle;">
+                                    <input type="text" class="form-control" name="search-herb-text"  value="{{ name }}" style="vertical-align: middle;">
                                 </div>
                                 <div class="col-sm-2 " style="text-align: right;">
                                     <button class="btn btn-primary" type="submit">检索</button>
@@ -33,9 +33,29 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                        {% if herb %}
                             <h2 class="h5">{{ herb.med_mat_name}}</h2>
-                            <table class="table table-hover">
-                              <tbody>
+                        <div>
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                                    {% if page1 %}
+                                        <li role="presentation" ><a href="#home" aria-controls="home"  aria-expanded="false" role="tab" data-toggle="tab" id="home-tab">详细信息</a></li>
+                                        <li role="presentation" ><a href="#profile" aria-controls="profile" aria-expanded="true" role="tab"  data-toggle="tab" id="profile-tab">相关组分分子</a></li>
+                                    {% else %}
+                                        <li role="presentation" ><a href="#home" aria-controls="home" aria-expanded="true" role="tab" data-toggle="tab" id="home-tab">详细信息</a></li>
+                                        <li role="presentation" ><a href="#profile" aria-controls="profile" role="tab" aria-expanded="false" data-toggle="tab" id="profile-tab">相关组分分子</a></li>
+                                    {% endif %}
+                                    <li role="presentation" ><a href="#messages" aria-controls="messages" role="tab" aria-expanded="false" data-toggle="tab" id="messages-tab">相关靶标</a></li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content" id="myTabContent">
+                                    {% if page1 %}
+                                        <div role="tabpanel" aria-labelledby="home-tab" class="tab-pane fade" id="home">
+                                    {% else %}
+                                        <div role="tabpanel" aria-labelledby="home-tab" class="tab-pane active" id="home">
+                                    {% endif %}
+                                        <table class="table table-hover">
+                                            <tbody>
                                 <tr>
                                   <th width="30%" scope="row">【汉语拼音】</th>
                                   <td>{{ herb.pinyin }}</td>
@@ -178,10 +198,132 @@
                                   <th scope="row">【附注】</th>
                                   <td>{{ herb.annotation }}</td>
                                 </tr>
+                              <tr>
+                                  <th scope="row">【声明】</th>
+                                  <td>{{ herb.statement }}</td>
+                                </tr>
                               </tbody>
-                            </table>
+                                        </table>
+                                    </div>
+                                    {% if page1 %}
+                                        <div role="tabpanel" aria-labelledby="home-tab" class="tab-pane active" id="home">
+                                    {% else %}
+                                        <div role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade" id="profile">
+                                    {% endif %}
+                                    <div class="list-group">
+                                        {% if molecule_list %}
+                                            {% for molecule in molecule_list %}
+                                                <a href="{% url 'Search_com' molecule %}" class="list-group-item list-group-item-action flex-column align-items-start ">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <h5 class="mb-1">{{ molecule }}</h5>
+                                                    </div>
+                                                </a>
+                                            {% endfor %}
+                                            <br>
+{#                                            <div class="pagination row">#}
+{#                                    <div class="m-auto">#}
+{#                                        <span class="step-links">#}
+{#                                            <!-- 如果不是第一页，则显示上翻按钮 -->#}
+{#                                            {% if molecule_list.has_previous %}#}
+{#                                                <a href="?page1=1" class="btn btn-success">#}
+{#                                                    &laquo; 1#}
+{#                                                </a>#}
+{#                                                <span>...</span>#}
+{#                                                <a href="?page1={{ molecule_list.previous_page_number }}"#}
+{#                                                   class="btn btn-secondary"#}
+{#                                                >#}
+{#                                                    {{ molecule_list.previous_page_number }}#}
+{#                                                </a>#}
+{#                                            {% endif %}#}
+{#                                            <!-- 当前页面 -->#}
+{#                                            <span class="current btn btn-success btn-lg">#}
+{#                                                {{ molecule_list.number }}#}
+{#                                            </span>#}
+{#                                            <!-- 如果不是最末页，则显示下翻按钮 -->#}
+{#                                            {% if molecule_list.has_next %}#}
+{#                                                <a href="?page1={{ molecule_list.next_page_number }}"#}
+{#                                                   class="btn btn-secondary"#}
+{#                                                >#}
+{#                                                    {{ molecule_list.next_page_number }}#}
+{#                                                </a>#}
+{#                                                <span>...</span>#}
+{#                                                <a href="?page1={{ molecule_list.paginator.num_pages }}"#}
+{#                                                   class="btn btn-success"#}
+{#                                                >#}
+{#                                                    {{ molecule_list.paginator.num_pages }} &raquo;#}
+{#                                                </a>#}
+{#                                            {% endif %}#}
+{#                                        </span>#}
+{#                                    </div>#}
+{#                                </div>#}
+                                        {% else %}
+                                            <p>没有查找到相关组分分子</p>
+                                        {% endif %}
+                                    </div>
+                                    </div>
+                                    <div role="tabpanel" aria-labelledby="messages-tab" class="tab-pane fade" id="messages">
+                                        <div class="list-group">
+                                            {% if target_list %}
+                                            {% for target in target_list %}
+                                                <a href="{% url 'Search_target' target %}" class="list-group-item list-group-item-action flex-column align-items-start ">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <h5 class="mb-1">{{ target }}</h5>
+                                                    </div>
+                                                </a>
+                                            {% endfor %}
+                                                <br>
+{#                                                <div class="pagination row">#}
+{#                                    <div class="m-auto">#}
+{#                                        <span class="step-links">#}
+{#                                            <!-- 如果不是第一页，则显示上翻按钮 -->#}
+{#                                            {% if target_list.has_previous %}#}
+{#                                                <a href="?page2=1" class="btn btn-success">#}
+{#                                                    &laquo; 1#}
+{#                                                </a>#}
+{#                                                <span>...</span>#}
+{#                                                <a href="?page2={{ target_list.previous_page_number }}"#}
+{#                                                   class="btn btn-secondary"#}
+{#                                                >#}
+{#                                                    {{ target_list.previous_page_number }}#}
+{#                                                </a>#}
+{#                                            {% endif %}#}
+{#                                            <!-- 当前页面 -->#}
+{#                                            <span class="current btn btn-success btn-lg">#}
+{#                                                {{ target_list.number }}#}
+{#                                            </span>#}
+{#                                            <!-- 如果不是最末页，则显示下翻按钮 -->#}
+{#                                            {% if molecule_list.has_next %}#}
+{#                                                <a href="?page2={{ target_list.next_page_number }}"#}
+{#                                                   class="btn btn-secondary"#}
+{#                                                >#}
+{#                                                    {{ target_list.next_page_number }}#}
+{#                                                </a>#}
+{#                                                <span>...</span>#}
+{#                                                <a href="?page2={{ target_list.paginator.num_pages }}"#}
+{#                                                   class="btn btn-success"#}
+{#                                                >#}
+{#                                                    {{ target_list.paginator.num_pages }} &raquo;#}
+{#                                                </a>#}
+{#                                            {% endif %}#}
+{#                                        </span>#}
+{#                                    </div>#}
+{#                                </div>#}
+                                            {% else %}
+                                                <p>没有查找到相关靶标</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                        {% else %}
+                            <h2 class="card-title">未找到相关结果</h2>
+                            <br>
+                            <p class="card-subtitle mb-2 text-muted">您可以:</p>
+                            <p class="card-text">1.检查检索词是否有误或者过于复杂，更换检索词后重试</p>
+                            <p class="card-text">2.在其他栏目中搜索“{{ name }}”</p>
+                        {% endif %}
                 </div>
             </div>
         </div>
