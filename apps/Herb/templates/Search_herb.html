@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}药材知识库{% endblock %}
+
+{% block content %}
+    <!-- Counts Section -->
+    <br>
+        <div class="container-fluid">
+            <!-- Page Header-->
+            <header>
+                <h1 class="h3 display">药材知识库</h1>
+            </header>
+            <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url 'Herb:herbindex' %}" method="get">
+                            <div class="form-group row" style="margin-left: 25%;" >
+                                <label class="form-control-label" >药材名称</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="search-herb-text"  value="{{ name }}" style="vertical-align: middle;">
+                                </div>
+                                <div class="col-sm-2 " style="text-align: right;">
+                                    <button class="btn btn-primary" type="submit">检索</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                        {% if herb %}
+                            <h2 class="h5">{{ herb.herbs_name}}</h2>
+                        <div>
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                                    {% if page1 %}
+                                        <li role="presentation" ><a href="#home" aria-controls="home"  aria-expanded="false" role="tab" data-toggle="tab" id="home-tab">详细信息</a></li>
+                                        <li role="presentation" ><a href="#profile" aria-controls="profile" aria-expanded="true" role="tab"  data-toggle="tab" id="profile-tab">相关组分分子</a></li>
+                                    {% else %}
+                                        <li role="presentation" ><a href="#home" aria-controls="home" aria-expanded="true" role="tab" data-toggle="tab" id="home-tab">详细信息</a></li>
+                                        <li role="presentation" ><a href="#profile" aria-controls="profile" role="tab" aria-expanded="false" data-toggle="tab" id="profile-tab">相关组分分子</a></li>
+                                    {% endif %}
+                                    <li role="presentation" ><a href="#messages" aria-controls="messages" role="tab" aria-expanded="false" data-toggle="tab" id="messages-tab">相关靶标</a></li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content" id="myTabContent">
+                                    {% if page1 %}
+                                        <div role="tabpanel" aria-labelledby="home-tab" class="tab-pane fade" id="home">
+                                    {% else %}
+                                        <div role="tabpanel" aria-labelledby="home-tab" class="tab-pane active" id="home">
+                                    {% endif %}
+                                        <table class="table table-hover">
+                                            <tbody>
+                                <tr>
+                                  <th width="30%" scope="row">【汉语拼音】</th>
+                                  <td>{{ herb.pinyin }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【别名】</th>
+                                  <td>{{ herb.alias }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【简介】</th>
+                                  <td>{{ herb.herbs_intro }}</td>
+                                </tr>
+                              <tr>
+                              {% if classify == 1 %}
+{#                                  植物#}
+                                    <tr>
+                                  <th scope="row">【种属】</th>
+                                  <td>{{ herb.plclassify }}</td>
+                                </tr>
+                                  <tr>
+                                  <th scope="row">【形态】</th>
+                                  <td>{{ herb.plcha }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【生长环境】</th>
+                                  <td>{{ herb.plenvir }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【分布区域】</th>
+                                  <td>{{ herb.distribute }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【栽培技术】</th>
+                                  <td>{{ herb.cultech }}</td>
+                                </tr>
+                                  <tr>
+                                  <th scope="row">【繁殖方式】</th>
+                                  <td>{{ herb.modesofrepro }}</td>
+                                </tr>
+                                  <tr>
+                                  <th scope="row">【生长见习】</th>
+                                  <td>{{ herb.growth }}</td>
+                                </tr>
+                                   <tr>
+                                  <th scope="row">【病虫防治】</th>
+                                  <td>{{ herb.bcpre }}</td>
+                                </tr>
+                              {% elif classify == 2 %}
+{#                                  动物#}
+                                <tr>
+                                  <th scope="row">【种属】</th>
+                                  <td>{{ herb.anikind }}</td>
+                                </tr>
+                                  <tr>
+                                  <th scope="row">【形态】</th>
+                                  <td>{{ herb.anicha }}</td>
+                                  </tr>
+                                  <tr>
+                                  <th scope="row">【生长环境】</th>
+                                  <td>{{ herb.plenvir }}</td>
+                                </tr>
+                                  <tr>
+                                  <th scope="row">【产区】</th>
+                                  <td>{{ herb.proarea }}</td>
+                                  </tr>
+                                  <tr>
+                                  <th scope="row">【人工养殖】</th>
+                                  <td>{{ herb.manmade }}</td>
+                                  </tr>
+                              {% else %}
+{#                                  矿物#}
+                                  <tr>
+                                  <th scope="row">【种属】</th>
+                                  <td>{{ herb.mineralkind }}</td>
+                                    </tr>
+                                  <tr>
+                                  <th scope="row">【形态】</th>
+                                  <td>{{ herb.mineralcha }}</td>
+                                  </tr>
+                                    <tr>
+                                  <th scope="row">【生长环境】</th>
+                                  <td>{{ herb.mineralenvir }}</td>
+                                </tr>
+                                  <th scope="row">【资源分布】</th>
+                                  <td>{{ herb.resourcedis }}</td>
+                                </tr>
+                                  <th scope="row">【理化性质】</th>
+                                  <td>{{ herb.mineralnat }}</td>
+                                </tr>
+                              {% endif %}
+                                <tr>
+                                  <th scope="row">【采收加工】</th>
+                                  <td>{{ herb.machine }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【性味归经】</th>
+                                  <td>{{ herb.taste }}</td>
+                                </tr>
+                              <tr>
+                                  <th scope="row">【功能】</th>
+                                  <td>{{ herb.function }}</td>
+                                </tr>
+                              <tr>
+                                  <th scope="row">【相关论述】</th>
+                                  <td>{{ herb.discuss }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【药理作用】</th>
+                                  <td>{{ herb.medfun }}</td>
+                                </tr>
+                                 <tr>
+                                  <th scope="row">【用法用量】</th>
+                                  <td>{{ herb.usdosage }}</td>
+                                </tr>
+                                 <tr>
+                                  <th scope="row">【贮藏方法】</th>
+                                  <td>{{ herb.stomethod }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【炮制方法】</th>
+                                  <td>{{ herb.pmethod }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【禁忌】</th>
+                                  <td>{{ herb.taboo }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【毒性】</th>
+                                  <td>{{ herb.toxicity }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【毒理作用】</th>
+                                  <td>{{ herb.toxeffect }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【注意事项】</th>
+                                  <td>{{ herb.attention }}</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">【附注】</th>
+                                  <td>{{ herb.annotation }}</td>
+                                </tr>
+                              <tr>
+                                  <th scope="row">【声明】</th>
+                                  <td>{{ herb.statement }}</td>
+                                </tr>
+                              </tbody>
+                                        </table>
+                                    </div>
+                                    {% if page1 %}
+                                        <div role="tabpanel" aria-labelledby="home-tab" class="tab-pane active" id="home">
+                                    {% else %}
+                                        <div role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade" id="profile">
+                                    {% endif %}
+                                    <div class="list-group">
+                                        {% if molecule_list %}
+                                            {% for molecule in molecule_list %}
+                                                <a href="{% url 'Ingredients:Search_com' molecule %}" class="list-group-item list-group-item-action flex-column align-items-start ">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <h5 class="mb-1">{{ molecule }}</h5>
+                                                    </div>
+                                                </a>
+                                            {% endfor %}
+                                        {% else %}
+                                            <br>
+                                            <div class="row" style="text-align: center"><p style="margin:0 auto;width:200px;">没有查找到相关组分分子</p></div>
+                                        {% endif %}
+                                    </div>
+                                    </div>
+                                    <div role="tabpanel" aria-labelledby="messages-tab" class="tab-pane fade" id="messages">
+                                        <div class="list-group">
+                                            {% if target_list %}
+                                            {% for target in target_list %}
+                                                <a href="{% url 'Target:Search_target' target %}" class="list-group-item list-group-item-action flex-column align-items-start ">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <h5 class="mb-1">{{ target }}</h5>
+                                                    </div>
+                                                </a>
+                                            {% endfor %}
+                                            {% else %}
+                                                <br>
+                                                <div class="row" style="text-align: center"><p style="margin:0 auto;width:200px;">没有查找到相关靶标</p></div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        {% else %}
+                            <h2 class="card-title">未找到相关结果</h2>
+                            <br>
+                            <p class="card-subtitle mb-2 text-muted">您可以:</p>
+                            <p class="card-text">1.检查检索词是否有误或者过于复杂，更换检索词后重试</p>
+                            <p class="card-text">2.在其他栏目中搜索“{{ name }}”</p>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}
+

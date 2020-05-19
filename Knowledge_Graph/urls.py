@@ -15,10 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from Graphapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # #url正则匹配
-    path('Graphapp/', include('Graphapp.urls')),
-]
+    #图谱展示
+    path('Graphapp/', include(('apps.Graphapp.urls',"Graphapp"),namespace='Graphapp')),
+    #成分对比分析
+    path('Analysis/', include(('apps.Analysis.urls',"Analysis"),namespace='Analysis')),
+    #方剂知识库
+    path('Formula/', include(('apps.Formula.urls',"Formula"),namespace='Formula')),
+    #药材知识库
+    path('Herb/', include(('apps.Herb.urls',"Herb"),namespace='Herb')),
+    #组分知识库
+    path('Ingredients/', include(('apps.Ingredients.urls',"Ingredients"),namespace='Ingredients')),
+    #靶标知识库
+    path('Target/', include(('apps.Target.urls',"Target"),namespace='Target')),
+    #方剂配伍
+    path('Combination/', include(('apps.Combination.urls',"Combination"),namespace='Combination'))
+  ]

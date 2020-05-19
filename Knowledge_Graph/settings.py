@@ -37,8 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Graphapp'
+    'apps.Graphapp',
+    'apps.Analysis',
+    'apps.Formula',
+    'apps.Ingredients',
+    'apps.Herb',
+    'apps.Target',
+    'apps.Combination',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +62,14 @@ ROOT_URLCONF = 'Knowledge_Graph.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'Graphapp/templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'apps/Formula/templates'),
+                 os.path.join(BASE_DIR, 'apps/Graphapp/templates'),
+                 os.path.join(BASE_DIR, 'apps/Ingredients/templates'),
+                 os.path.join(BASE_DIR, 'apps/Herb/templates'),
+                 os.path.join(BASE_DIR, 'apps/Target/templates'),
+                 os.path.join(BASE_DIR, 'apps/Analysis/templates'),
+                 os.path.join(BASE_DIR, 'apps/Combination/templates'),
+                 ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -125,4 +139,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 #静态文件路径
-STATICFILES_DIRS=[os.path.join(BASE_DIR, 'Graphapp/static')]
+STATICFILES_DIRS=[os.path.join(BASE_DIR, 'static')]
