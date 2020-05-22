@@ -4,5 +4,5 @@ from apps.Target import views
 
 urlpatterns = [
  path('Targetindex/', views.Targetindex, name='Targetindex'),
- path('Search_target/(?P<name>\w+)', views.Search_target, name='Search_target'),
+ path('Search_target/<str:name>/', views.Search_target, name='Search_target'),
                ]

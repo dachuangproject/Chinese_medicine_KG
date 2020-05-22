@@ -62,8 +62,8 @@ def FAnalyindex(request):
     if not (search_text1 or search_text2):
         return render(request, 'FAnalyindex.html')
     #模糊搜索
-    formulas1=Formulas.objects.filter(formulas_name__contains=search_text1).values_list('formulas_name',flat=True)
-    formulas2=Formulas.objects.filter(formulas_name__contains=search_text2).values_list('formulas_name',flat=True)
+    formulas1=Formulas.objects.filter(formulas_name__contains=search_text1,mark=1).values_list('formulas_name',flat=True)
+    formulas2=Formulas.objects.filter(formulas_name__contains=search_text2,mark=1).values_list('formulas_name',flat=True)
     #没有找到
     if not (formulas1 or formulas2):
         return render(request, 'FAnalyindex.html', {'search_text1':search_text1, 'search_text2':search_text2})
@@ -97,10 +97,10 @@ def FAnalysis(request,name):
     links = []
     nodes.append({'id': formula[0], 'class': 'recipe', 'group': 0, 'size': 20})
     nodes.append({'id': formula[1], 'class': 'recipe', 'group': 0, 'size': 20})
-    formula1=Formulas.objects.filter(formulas_name=formula[0]).values_list('formulas_no',flat=True)
-    formula2=Formulas.objects.filter(formulas_name=formula[1]).values_list('formulas_no',flat=True)
-    herbs1=Forcom.objects.filter(formulas_no=formula1[0]).values_list('herbs_name',flat=True)
-    herbs2=Forcom.objects.filter(formulas_no=formula2[0]).values_list('herbs_name',flat=True)
+    formula1=Formulas.objects.filter(formulas_name=formula[0],mark=1).values_list('formulas_no',flat=True)
+    formula2=Formulas.objects.filter(formulas_name=formula[1],mark=1).values_list('formulas_no',flat=True)
+    herbs1=Forcom.objects.filter(formulas_no=formula1[0],mark=1).values_list('herbs_name',flat=True)
+    herbs2=Forcom.objects.filter(formulas_no=formula2[0],mark=1).values_list('herbs_name',flat=True)
     mols1=[]
     mols2=[]
     for herb1 in herbs1:

@@ -109,12 +109,10 @@
                                                 <div class="d-flex w-100 justify-content-between">
                                                     <h5 class="mb-1">{{ recipe.provenance }}</h5>
                                                 </div>
-                                                {% if recipe.imliter != 'null' %}
+                                                {% if recipe.imliter != 'null'  %}
                                                 <div class="d-flex w-100 justify-content-between">
                                                     <h5 class="mb-1">{{ recipe.imliter }}</h5>
                                                 </div>
-                                                {% else %}
-                                                    <div class="row" style="text-align: center"><p style="margin:0 auto;width:200px;"><p>没有查找到相关文献</p></div>
                                                 {% endif %}
                                             </a>
                                         </div>

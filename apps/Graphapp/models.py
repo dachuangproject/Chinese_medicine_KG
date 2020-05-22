@@ -43,11 +43,11 @@ class Target(models.Model):
         db_table = 'target'
 
 class Forcom(models.Model):
-    forcom_no = models.CharField(db_column='forcom_No', primary_key=True, max_length=10)
+    forcom_no = models.CharField(db_column='forcom_No', primary_key=True, max_length=40)
     dosage1= models.CharField(max_length=255, blank=True, null=True)
     dosage2= models.CharField(max_length=255, blank=True, null=True)
     mark= models.CharField(max_length=255, blank=True, null=True)
-    formulas_no= models.CharField(db_column='formulas_No',max_length=10, blank=True, null=True)
+    formulas_no= models.CharField(db_column='formulas_No',max_length=40, blank=True, null=True)
     herbs_name= models.CharField(db_column='herbs_Name',max_length=255, blank=True, null=True)
 
     class Meta:
@@ -131,7 +131,7 @@ class Molecule(models.Model):
 
 
 class Formulas(models.Model):
-    formulas_no = models.CharField(db_column='formulas_No', primary_key=True, max_length=10)  # Field name made lowercase.
+    formulas_no = models.CharField(db_column='formulas_No', primary_key=True, max_length=40)  # Field name made lowercase.
     formulas_name = models.CharField(db_column='formulas_Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
     composition = models.CharField(max_length=255, blank=True, null=True)
     provenance = models.CharField(max_length=255, blank=True, null=True)

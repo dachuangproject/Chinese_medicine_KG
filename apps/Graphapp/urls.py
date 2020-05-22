@@ -7,10 +7,10 @@ urlpatterns = [
  path('Recipehcindex/', views.Recipehcindex, name='Recipehcindex'),
  path('Recipehmiindex/', views.Recipehmiindex, name='Recipehmiindex'),
  #方剂KG展示
- path('RecipehcKG/(?P<name>\w+)', views.RecipehcKG, name='RecipehcKG'),
- path('RecipehmiKG/(?P<name>\w+)', views.RecipehmiKG, name='RecipehmiKG'),
+ path('RecipehcKG/<str:name>/', views.RecipehcKG, name='RecipehcKG'),
+ path('RecipehmiKG/<str:name>/', views.RecipehmiKG, name='RecipehmiKG'),
 
 
  path('Predictindex/', views.Predictindex, name='Predictindex'),
- path('PredictKG/(?P<name>\w+)', views.PredictKG, name='PredictKG'),
+ path('PredictKG/<str:name>/', views.PredictKG, name='PredictKG'),
 ]

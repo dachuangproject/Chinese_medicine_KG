@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 
 from apps.Graphapp.models import Herbs,Formulas,Target,Forcom,Herbsmol,Tamol
+
 #药材组分知识图谱
 def Recipehcindex(request):
     search_text=request.GET.get('search-recipehcKG-text')
@@ -11,7 +12,7 @@ def Recipehcindex(request):
         return render(request,'Recipehcindex.html')
     #TODO: 搜索拉丁文名
     #模糊搜索
-    recipes=Formulas.objects.filter(formulas_name__contains=search_text).values_list('formulas_name',flat=True)
+    recipes=Formulas.objects.filter(formulas_name__contains=search_text,mark=1).values_list('formulas_name',flat=True)
     #搜索不到
     if not recipes:
         return render(request, 'Recipehcindex.html', {'search_text':search_text})
@@ -22,13 +23,13 @@ def Recipehcindex(request):
     recipe_list = p.get_page(page)
     return render(request, 'Recipehcindex.html', {'search_text':search_text,'recipe_list':recipe_list})
 def RecipehcKG(request,name):
-        recipe=Formulas.objects.filter(formulas_name=name)
+        recipe=Formulas.objects.filter(formulas_name=name,mark=1)
         nodes = []
         links = []
         #TODO:查询优化
         #1 查询该方剂对应所有药材 source：方剂 target：药材 node：药材
         nodes.append({'id': recipe[0].formulas_name, 'class': 'recipe', 'group': 0, 'size': 20})
-        herbs=Forcom.objects.filter(formulas_no=recipe[0].formulas_no).values_list('herbs_name',flat=True)
+        herbs=Forcom.objects.filter(formulas_no=recipe[0].formulas_no,mark=1).values_list('herbs_name',flat=True)
         #2 查询每种药材对应组分分子 source：药材 target：分子
         for herb in herbs:
             nodes.append({'id': herb, 'class': 'herb', 'group': 1, 'size': 15})
@@ -47,12 +48,12 @@ def RecipehcKG(request,name):
         return render(request,'RecipehcKG.html',{'arg':arg,'recipe_mame':name})
 #药材靶标疾病知识图谱
 def RecipehmiKG(request,name):
-        recipe=Formulas.objects.filter(formulas_name=name)
+        recipe=Formulas.objects.filter(formulas_name=name,mark=1)
         nodes = []
         links = []
         #1 查询该方剂对应所有药材 source：方剂 target：药材 node：药材
         nodes.append({'id': recipe[0].formulas_name, 'class': 'recipe', 'group': 0, 'size': 20})
-        herbs=Forcom.objects.filter(formulas_no=recipe[0].formulas_no).values_list('formulas_name',flat=True)
+        herbs=Forcom.objects.filter(formulas_no=recipe[0].formulas_no,mark=1).values_list('herbs_name',flat=True)
         #2 查询每个药材对应靶标source：药材 target：靶标
         for herb in herbs:
             nodes.append({'id': herb, 'class': 'herb', 'group': 1, 'size': 15})
@@ -84,7 +85,7 @@ def Recipehmiindex(request):
         return render(request,'Recipehmiindex.html')
     #TODO: 搜索拉丁文名
     #模糊搜索
-    recipes=Formulas.objects.filter(formulas_name__contains=search_text).values_list('formulas_name',flat=True)
+    recipes=Formulas.objects.filter(formulas_name__contains=search_text,mark=1).values_list('formulas_name',flat=True)
     #搜索不到
     if not recipes:
         return render(request, 'Recipehmiindex.html', {'search_text':search_text})

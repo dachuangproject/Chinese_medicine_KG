@@ -37,9 +37,9 @@
                             <h2 class="h5">搜索结果</h2>
                               <div class="list-group">
                                 {% for herb in herb_list %}
-                                  <a href="{% url 'Herb:Search_herb' herb.med_mat_name %} " class="list-group-item list-group-item-action flex-column align-items-start">
+                                  <a href="{% url 'Herb:Search_herb' herb.herbs_name %} " class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
-                                      <h5 class="mb-1" >{{ herb.med_mat_name }}</h5>
+                                      <h5 class="mb-1" >{{ herb.herbs_name }}</h5>
                                     </div>
                                   </a>
                                 {% endfor %}

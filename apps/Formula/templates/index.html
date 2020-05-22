@@ -37,7 +37,7 @@
                             <h2 class="h5">搜索结果</h2>
                                 <div class="list-group">
                                 {% for recipe in recipe_list %}
-                                  <a href="{% url 'Formula:Search_recipe' recipe %} " class="list-group-item list-group-item-action flex-column align-items-start">
+                                  <a href="{% url 'Formula:Search_recipe' recipe %}" class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
                                       <h5 class="mb-1" >{{ recipe }}</h5>
                                     </div>

@@ -13,12 +13,10 @@
     <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}">
-    <!-- Fontastic Custom icon font-->
-    <link rel="stylesheet" href="{% static 'css/fontastic.css' %}">
     <!-- Google fonts - Roboto-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+{#    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">#}
     <!-- jQuery Circle-->
-    <link rel="stylesheet" href="{% static 'css/grasp_mobile_progress_circle-1.0.0.min.css' %}">
+{#    <link rel="stylesheet" href="{% static 'css/mobile_progress_circle-1.0.0.min.css' %}">#}
     <!-- Custom Scrollbar-->
     <link rel="stylesheet" href="{% static 'vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css' %}">
     <!-- theme stylesheet-->
@@ -31,10 +29,20 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="https://at.alicdn.com/t/font_1829660_8u32drfcne.js"></script>
       {% block css %}{% endblock %}
   </head>
   <body>
-    <!-- Side Navbar -->
+    <style type="text/css">
+    .icon {
+       width: 1.7em; height: 1.7em;
+       vertical-align: -0.4em;
+       fill: currentColor;
+       overflow: hidden;
+    }
+</style>
+        <!-- Side Navbar -->
     <nav class="side-navbar">
       <div class="side-navbar-wrapper">
         <!-- Sidebar Header    -->
@@ -48,24 +56,33 @@
         <!-- Sidebar Navigation Menus-->
         <div class="main-menu">
           <ul id="side-main-menu" class="side-menu list-unstyled">
-            <li><a href="{% url 'Formula:index' %}"> <i class="icon-screen"></i>中药方剂知识库                           </a></li>
-            <li><a href="{% url 'Herb:herbindex' %}"> <i class="icon-flask"></i>药材知识库                           </a></li>
-            <li><a href="{% url 'Ingredients:Comindex' %}"> <i class="icon-grid"></i>组分知识库                           </a></li>
-            <li><a href="{% url 'Target:Targetindex' %}"> <i class="icon-flask"></i>靶标知识库                           </a></li>
-            <li><a href="#Dropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-website"></i>方剂知识图谱 </a>
+            <li><a href="{% url 'Formula:index' %}"> <svg class="icon" aria-hidden="true"
+    xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-formula"></use></svg>中药方剂知识库 </a> </li>
+            <li><a href="{% url 'Herb:herbindex' %}"><svg class="icon" aria-hidden="true"
+    xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-herb"></use></svg>药材知识库                           </a></li>
+            <li><a href="{% url 'Ingredients:Comindex' %}"><svg class="icon" aria-hidden="true"
+    xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-ingredient"></use></svg>组分知识库                           </a></li>
+            <li><a href="{% url 'Target:Targetindex' %}"><svg class="icon" aria-hidden="true"
+    xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-target"></use></svg>靶标知识库                           </a></li>
+            <li><a href="#Dropdown1" aria-expanded="false" data-toggle="collapse"><svg class="icon" aria-hidden="true"
+    xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-KG"></use></svg>方剂知识图谱 </a>
               <ul id="Dropdown1" class="collapse list-unstyled ">
                 <li><a href="{% url 'Graphapp:Recipehcindex' %}">方剂-药材-组分图谱</a></li>
                 <li><a href="{% url 'Graphapp:Recipehmiindex' %}">方剂-药材-靶标-疾病图谱</a></li>
               </ul>
             </li>
-            <li><a href="#Dropdown2" aria-expanded="false" data-toggle="collapse">  <i class="icon-flask"></i>成分对比分析      </a>
+            <li><a href="#Dropdown2" aria-expanded="false" data-toggle="collapse"><svg class="icon" aria-hidden="true"
+    xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-analysis"></use></svg>成分对比分析      </a>
               <ul id="Dropdown2" class="collapse list-unstyled ">
                 <li><a href="{% url 'Analysis:Analysisindex' %}">药材成分对比分析                        </a></li>
                 <li><a href="{% url 'Analysis:FAnalyindex' %}">方剂成分对比分析                        </a></li>
               </ul>
-            <li><a href="{% url 'Combination:FComindex' %}"> <i class="icon-flask"></i>方剂配伍(加减化裁)                        </a></li>
-            <li><a href="{% url 'Graphapp:Predictindex' %}"> <i class="icon-flask"></i>药对配伍预测                       </a></li>
-            <li><a href="{% url 'Formula:ADRindex' %}"> <i class="icon-flask"></i>不良反应                         </a></li>
+            <li><a href="{% url 'Combination:FComindex' %}"><svg class="icon" aria-hidden="true"
+    xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-combination"></use></svg>方剂配伍(加减化裁)                        </a></li>
+            <li><a href="{% url 'Graphapp:Predictindex' %}"><svg class="icon" aria-hidden="true"
+    xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-predict"></use></svg>药对配伍预测                       </a></li>
+            <li><a href="{% url 'Formula:ADRindex' %}"> <svg class="icon" aria-hidden="true"
+    xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-ADR"></use></svg>不良反应                         </a></li>
           </ul>
         </div>
       </div>
@@ -76,7 +93,8 @@
         <nav class="navbar">
           <div class="container-fluid">
             <div class="navbar-holder d-flex align-items-center justify-content-between">
-              <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a>
+              <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><svg class="icon" aria-hidden="true"
+    xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="#icon-bar"></use></svg></a>
                 <a href="{% url 'Formula:index' %}" class="navbar-brand">
                     <div class="brand-text d-none d-md-inline-block"><span style="font-size:19px">方剂</span><strong class="text-primary">知识图谱</strong></div>
                 </a>
